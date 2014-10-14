@@ -35,11 +35,11 @@ public class Netty3Server {
      * @return
      */
     public static Netty3ServerComponent startShutdownServer(final int port, final String secret,
-            final ServerComponent operations) {
+            final ServerComponent operations, final ValueCallback<Netty3ServerComponent> callback) {
 
         final Value<ServerComponent> ownServer = new Value<ServerComponent>(null);
 
-        new Netty3ServerConfiguration() {
+        final Netty3ServerConfiguration conf = new Netty3ServerConfiguration() {
 
             @Override
             public boolean getUseSsl() {
@@ -62,6 +62,20 @@ public class Netty3Server {
                 return port;
             }
         };
+
+        start(conf, new ValueCallback<Netty3ServerComponent>() {
+
+            @Override
+            public void onFailure(final Throwable t) {
+                callback.onFailure(t);
+            }
+
+            @Override
+            public void onSuccess(final Netty3ServerComponent value) {
+                ownServer.set(value);
+                callback.onSuccess(value);
+            }
+        });
 
         return ShutdownServerFactory.startNettyShutdownServer(port, secret, operations);
     }
