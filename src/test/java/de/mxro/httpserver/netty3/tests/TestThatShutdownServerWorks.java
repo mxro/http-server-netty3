@@ -7,6 +7,6 @@ public class TestThatShutdownServerWorks {
   @Test
   public void test() {
     throw new Error("Unresolved compilation problems:"
-      + "\nType mismatch: cannot convert from int to byte");
+      + "\nbyte cannot be resolved.");
   }
 }
