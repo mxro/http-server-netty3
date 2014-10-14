@@ -8,11 +8,14 @@ package de.mxro.httpserver.netty3;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import mx.sslutils.SslKeyStoreData;
+
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import de.mxro.async.callbacks.ValueCallback;
+import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.internal.InternalNettyRestServer;
 import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.netty3.internal.ShutdownServerFactory;
@@ -32,6 +35,31 @@ public class Netty3Server {
      */
     public static Netty3ServerComponent startShutdownServer(final int port, final String secret,
             final ServerComponent operations) {
+
+        new Netty3ServerConfiguration() {
+
+            @Override
+            public boolean getUseSsl() {
+                return false;
+            }
+
+            @Override
+            public SslKeyStoreData getSslKeyStore() {
+                return null;
+            }
+
+            @Override
+            public HttpService getService() {
+                return;
+            }
+
+            @Override
+            public int getPort() {
+                // TODO Auto-generated method stub
+                return 0;
+            }
+        };
+
         return ShutdownServerFactory.startNettyShutdownServer(port, secret, operations);
     }
 
