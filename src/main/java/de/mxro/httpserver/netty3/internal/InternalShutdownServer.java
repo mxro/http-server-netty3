@@ -9,12 +9,12 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 
 import de.mxro.async.callbacks.SimpleCallback;
-import de.mxro.httpserver.netty3.Netty3Server;
+import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ComponentConfiguration;
 import de.mxro.server.ComponentContext;
 import de.mxro.service.callbacks.ShutdownCallback;
 
-public class InternalShutdownServer implements Netty3Server {
+public class InternalShutdownServer implements Netty3ServerComponent {
 
 	protected final int port;
 	protected final Channel channel;

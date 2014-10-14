@@ -14,8 +14,8 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
+import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.netty3.Netty3Server;
-import de.mxro.httpserver.netty3.NxServerNetty;
 import de.mxro.server.ServerComponent;
 import de.mxro.service.callbacks.ShutdownCallback;
 
@@ -23,7 +23,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
 
     private final String secret;
     final ServerComponent shutdownOperations;
-    Netty3Server thisServer;
+    Netty3ServerComponent thisServer;
 
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
@@ -41,7 +41,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                 if (!requestUri.replace("/", "").equals(secret)) {
 
                     try {
-                        NxServerNetty
+                        Netty3Server
                                 .sendHttpResponse(
                                         e,
                                         "Access denied. You must supply the master secret for this server as part of the url, eg: http://myserver.com:8900/[your secret]"
@@ -62,7 +62,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                         try {
                             // new Exception("Shutdown successful")
                             // .printStackTrace();
-                            NxServerNetty.sendHttpSuccess(e, "Shutdown successful.".getBytes("UTF-8"), "text/plain");
+                            Netty3Server.sendHttpSuccess(e, "Shutdown successful.".getBytes("UTF-8"), "text/plain");
 
                             final TimerTask stopShutdownServer = new TimerTask() {
 
@@ -101,7 +101,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                         System.out.println("Failure while shutting down server: " + t.getMessage());
                         t.printStackTrace();
 
-                        NxServerNetty.sendHttpSuccess(e, t.getMessage().getBytes(), "text/plain");
+                        Netty3Server.sendHttpSuccess(e, t.getMessage().getBytes(), "text/plain");
 
                     }
 
@@ -114,7 +114,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
 
     }
 
-    public void setThisServer(final Netty3Server server) {
+    public void setThisServer(final Netty3ServerComponent server) {
         this.thisServer = server;
     }
 

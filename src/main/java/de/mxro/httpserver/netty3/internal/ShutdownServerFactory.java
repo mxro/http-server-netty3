@@ -11,12 +11,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import mx.jreutils.MxJREUtils;
+
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import de.mxro.async.callbacks.SimpleCallback;
-import de.mxro.httpserver.netty3.Netty3Server;
+import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ComponentConfiguration;
 import de.mxro.server.ComponentContext;
 import de.mxro.server.ServerComponent;
@@ -30,7 +32,7 @@ public class ShutdownServerFactory {
 
     private final static boolean ENABLE_DEBUG = false;
 
-    public static Netty3Server startNettyShutdownServer(final int port, final String secret,
+    public static Netty3ServerComponent startNettyShutdownServer(final int port, final String secret,
             final ServerComponent shutdownOperations) {
         final ThreadFactory threadFactory = new ThreadFactory() {
 
@@ -66,7 +68,7 @@ public class ShutdownServerFactory {
             System.out.println(ShutdownServerFactory.class + ": Shutdown server started on port: " + port);
         }
 
-        final Netty3Server nettyServer = new Netty3Server() {
+        final Netty3ServerComponent nettyServer = new Netty3ServerComponent() {
 
             @Override
             public int getPort() {
