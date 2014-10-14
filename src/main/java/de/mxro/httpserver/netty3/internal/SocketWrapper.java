@@ -140,7 +140,7 @@ public class SocketWrapper implements ByteStreamHandler {
             public void apply(final SuccessFail o) {
 
                 if (o.isFail()) {
-                    Netty3Server.sendHttpError(e, o.getException().getMessage());
+                    HttpUtils.sendHttpError(e, o.getException().getMessage());
                     return;
                 }
 

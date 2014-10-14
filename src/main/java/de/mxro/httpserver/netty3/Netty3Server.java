@@ -9,16 +9,10 @@ import static org.jboss.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TimeZone;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
@@ -52,7 +46,8 @@ public class Netty3Server {
      * @param operations
      * @return
      */
-    public static Netty3ServerComponent startShutdownServer(final int port, final String secret, final ServerComponent operations) {
+    public static Netty3ServerComponent startShutdownServer(final int port, final String secret,
+            final ServerComponent operations) {
         return ShutdownServerFactory.startNettyShutdownServer(port, secret, operations);
     }
 
@@ -120,85 +115,29 @@ public class Netty3Server {
         sendHttpResponse(event, bytes, OK.getCode(), contentType);
     }
 
-    public static void sendHttpSuccessWithCache(final int cacheMin, final MessageEvent event, final byte[] bytes,
-            final String contentType) {
-        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
-
-        final ChannelBuffer buffer = ChannelBuffers.wrappedBuffer(bytes);
-        response.setContent(buffer);
-        response.setHeader(CONTENT_TYPE, contentType);
-
-        final int maxCache = cacheMin * 60000; // 30 min
-        final long now = System.currentTimeMillis();
-
-        response.setHeader(HttpHeaders.Names.EXPIRES, now + maxCache);
-        response.setHeader(HttpHeaders.Names.LAST_MODIFIED, now);
-        response.setHeader(HttpHeaders.Names.CACHE_CONTROL, "max-age=" + maxCache + ", public");
-
-        final ChannelFuture future = event.getChannel().write(response);
-        future.addListener(ChannelFutureListener.CLOSE);
-    }
-
     public static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss zzz";
     public static final String HTTP_DATE_GMT_TIMEZONE = "GMT";
     public static final int HTTP_CACHE_SECONDS = 60;
 
-    private static void setDateHeader(final HttpResponse response) {
-        final SimpleDateFormat dateFormatter = new SimpleDateFormat(HTTP_DATE_FORMAT, Locale.US);
-        dateFormatter.setTimeZone(TimeZone.getTimeZone(HTTP_DATE_GMT_TIMEZONE));
+    public static void start(final Netty3ServerConfiguration conf, final ValueCallback<Netty3ServerComponent> callback) {
 
-        final Calendar time = new GregorianCalendar();
-        response.setHeader(HttpHeaders.Names.DATE, dateFormatter.format(time.getTime()));
-    }
-
-    public static void sendNotModified(final MessageEvent event) {
-
-        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, HttpResponseStatus.NOT_MODIFIED);
-        setDateHeader(response);
-
-        // Close the connection as soon as the error message is sent.
-        event.getChannel().write(response).addListener(ChannelFutureListener.CLOSE);
-
-    }
-
-    public static void sendHttpError(final MessageEvent event, final String message) {
-        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
-
-        ChannelBuffer buffer;
-        try {
-            buffer = ChannelBuffers.wrappedBuffer(message.getBytes("UTF-8"));
-
-            response.setContent(buffer);
-            response.setHeader(CONTENT_TYPE, "text/plain");
-
-            final ChannelFuture future = event.getChannel().write(response);
-            future.addListener(ChannelFutureListener.CLOSE);
-        } catch (final UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public static void start(final Netty3ServerConfiguration conf,
-            final ValueCallback<Netty3ServerComponent> callback) {
-    
         final NioServerSocketChannelFactory socketChannelFactory = new NioServerSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
-    
+
         final ServerBootstrap bootstrap = new ServerBootstrap(socketChannelFactory);
-    
+
         bootstrap.setOption("child.keepAlive", true);
-    
+
         final ByteStreamHandler messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
-    
+
         bootstrap.setPipelineFactory(new RestServerPipelineFactory(messageHandler, conf.getUseSsl(), conf
                 .getSslKeyStore()));
-    
+
         // Bind and start to accept incoming connections.
         final Channel server = bootstrap.bind(new InetSocketAddress(conf.getPort()));
-    
+
         callback.onSuccess(new InternalNettyRestServer(server, conf.getPort(), bootstrap));
-    
+
     }
 
 }
