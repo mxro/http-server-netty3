@@ -6,3 +6,4 @@ MANIFEST.MF
 .settings
 /META-INF
 gwt-unitCache
+**/*.java._trace
