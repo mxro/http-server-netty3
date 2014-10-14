@@ -9,7 +9,6 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 
 import de.mxro.async.callbacks.SimpleCallback;
-import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ComponentConfiguration;
 import de.mxro.server.ComponentContext;
@@ -19,7 +18,6 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
     protected final Channel channel;
     protected final int port;
     protected final ServerBootstrap bootstrap;
-    private final HttpService service;
 
     @Override
     public Channel getChannel() {
@@ -42,13 +40,11 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
 
     }
 
-    public InternalNettyRestServer(final HttpService service, final Channel channel, final int port,
-            final ServerBootstrap bootstrap) {
+    public InternalNettyRestServer(final Channel channel, final int port, final ServerBootstrap bootstrap) {
         super();
         this.channel = channel;
         this.port = port;
         this.bootstrap = bootstrap;
-        this.service = service;
     }
 
     @Override

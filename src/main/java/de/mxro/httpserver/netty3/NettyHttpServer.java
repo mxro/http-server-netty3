@@ -38,7 +38,7 @@ public class NettyHttpServer {
         // Bind and start to accept incoming connections.
         final Channel server = bootstrap.bind(new InetSocketAddress(conf.getPort()));
 
-        callback.onSuccess(new InternalNettyRestServer(conf.getService(), server, conf.getPort(), bootstrap));
+        callback.onSuccess(new InternalNettyRestServer(server, conf.getPort(), bootstrap));
 
     }
 
