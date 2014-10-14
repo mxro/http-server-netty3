@@ -3,10 +3,10 @@ package de.mxro.httpserver.netty3.tests
 import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
-import java.io.ByteArrayInputStream
 import java.net.URL
-import org.junit.Test
+import java.util.ArrayList
 import java.util.List
+import org.junit.Test
 
 class TestThatShutdownServerWorks {
 	
@@ -32,7 +32,7 @@ class TestThatShutdownServerWorks {
 		var List<Byte> res = new ArrayList
 		b = is.read()
 		while (b > -1) {
-			res.add
+			res.add(b);
 		}
 		
 		

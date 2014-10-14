@@ -7,7 +7,6 @@ public class TestThatShutdownServerWorks {
   @Test
   public void test() {
     throw new Error("Unresolved compilation problems:"
-      + "\nArrayList cannot be resolved."
-      + "\nInvalid number of arguments. The method add(E) is not applicable for the arguments ");
+      + "\nType mismatch: cannot convert from int to Byte");
   }
 }
