@@ -8,7 +8,6 @@ public class TestThatShutdownServerWorks {
   public void test() {
     throw new Error("Unresolved compilation problems:"
       + "\nno viable alternative at input \')\'"
-      + "\nInvalid number of arguments. The method startShutdownServer(int, String, ServerComponent, ValueCallback<Netty3ServerComponent>) is not applicable for the arguments (int,String)"
-      + "\nType mismatch: cannot convert from SimpleCallback to ValueCallback<Netty3ServerComponent>");
+      + "\nInvalid number of arguments. The method startShutdownServer(int, String, ServerComponent, ValueCallback<Netty3ServerComponent>) is not applicable for the arguments (int,String)");
   }
 }
