@@ -19,7 +19,6 @@ import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.internal.InternalNettyRestServer;
 import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
-import de.mxro.httpserver.netty3.internal.ShutdownServerFactory;
 import de.mxro.httpserver.netty3.internal.SocketWrapper;
 import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
@@ -34,8 +33,8 @@ public class Netty3Server {
      * @param operations
      * @return
      */
-    public static Netty3ServerComponent startShutdownServer(final int port, final String secret,
-            final ServerComponent operations, final ValueCallback<Netty3ServerComponent> callback) {
+    public static void startShutdownServer(final int port, final String secret, final ServerComponent operations,
+            final ValueCallback<Netty3ServerComponent> callback) {
 
         final Value<ServerComponent> ownServer = new Value<ServerComponent>(null);
 
@@ -77,7 +76,6 @@ public class Netty3Server {
             }
         });
 
-        return ShutdownServerFactory.startNettyShutdownServer(port, secret, operations);
     }
 
     public static void start(final Netty3ServerConfiguration conf, final ValueCallback<Netty3ServerComponent> callback) {
