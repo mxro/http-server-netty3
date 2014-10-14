@@ -99,4 +99,32 @@ public class Netty3Server {
 
     }
 
+    public static void start(final HttpService service, final int port,
+            final ValueCallback<Netty3ServerComponent> callback) {
+        final Netty3ServerConfiguration configuration = new Netty3ServerConfiguration() {
+
+            @Override
+            public boolean getUseSsl() {
+                return false;
+            }
+
+            @Override
+            public SslKeyStoreData getSslKeyStore() {
+                return null;
+            }
+
+            @Override
+            public HttpService getService() {
+                return service;
+            }
+
+            @Override
+            public int getPort() {
+                return port;
+            }
+        };
+
+        start(configuration, callback);
+    }
+
 }
