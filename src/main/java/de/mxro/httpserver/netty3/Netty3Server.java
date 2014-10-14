@@ -59,8 +59,7 @@ public class Netty3Server {
 
             @Override
             public int getPort() {
-                // TODO Auto-generated method stub
-                return 0;
+                return port;
             }
         };
 
