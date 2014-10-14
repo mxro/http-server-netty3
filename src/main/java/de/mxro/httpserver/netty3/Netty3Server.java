@@ -14,6 +14,7 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import de.mxro.async.Value;
 import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.internal.InternalNettyRestServer;
@@ -36,6 +37,8 @@ public class Netty3Server {
     public static Netty3ServerComponent startShutdownServer(final int port, final String secret,
             final ServerComponent operations) {
 
+        final Value<ServerComponent> ownServer = new Value<ServerComponent>(null);
+
         new Netty3ServerConfiguration() {
 
             @Override
@@ -50,6 +53,7 @@ public class Netty3Server {
 
             @Override
             public HttpService getService() {
+
                 return Services.shutdown(secret, operations, ownServer);
             }
 
