@@ -31,7 +31,12 @@
 		</dependency>
 		
 	
-
+		<dependency>
+			<groupId>de.mxro.server</groupId>
+			<artifactId>server-api</artifactId>
+			<version>[0.0.1,)</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

@@ -10,7 +10,7 @@ import org.jboss.netty.channel.Channel;
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.server.ServerComponent;
 
-public interface NettyServer extends ServerComponent {
+public interface Netty3Server extends ServerComponent {
 
 	public Channel getChannel();
 
