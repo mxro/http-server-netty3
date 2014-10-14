@@ -50,7 +50,7 @@ public class Netty3Server {
 
             @Override
             public HttpService getService() {
-                return;
+                return Services.shutdown(secret, operations, ownServer);
             }
 
             @Override
