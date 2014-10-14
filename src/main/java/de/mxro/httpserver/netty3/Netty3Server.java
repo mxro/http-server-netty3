@@ -10,6 +10,7 @@ import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,18 +19,27 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
+import java.util.concurrent.Executors;
 
+import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 
+import de.mxro.async.callbacks.ValueCallback;
+import de.mxro.httpserver.netty3.internal.InternalNettyRestServer;
+import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.netty3.internal.ShutdownServerFactory;
+import de.mxro.httpserver.netty3.internal.SocketWrapper;
+import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
 
 public class Netty3Server {
@@ -167,6 +177,28 @@ public class Netty3Server {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void start(final Netty3ServerConfiguration conf,
+            final ValueCallback<Netty3ServerComponent> callback) {
+    
+        final NioServerSocketChannelFactory socketChannelFactory = new NioServerSocketChannelFactory(
+                Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
+    
+        final ServerBootstrap bootstrap = new ServerBootstrap(socketChannelFactory);
+    
+        bootstrap.setOption("child.keepAlive", true);
+    
+        final ByteStreamHandler messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
+    
+        bootstrap.setPipelineFactory(new RestServerPipelineFactory(messageHandler, conf.getUseSsl(), conf
+                .getSslKeyStore()));
+    
+        // Bind and start to accept incoming connections.
+        final Channel server = bootstrap.bind(new InetSocketAddress(conf.getPort()));
+    
+        callback.onSuccess(new InternalNettyRestServer(server, conf.getPort(), bootstrap));
+    
     }
 
 }

@@ -3,7 +3,7 @@ package de.mxro.httpserver.netty3;
 import mx.sslutils.SslKeyStoreData;
 import de.mxro.httpserver.HttpService;
 
-public abstract class RestServerConfiguration {
+public abstract class Netty3ServerConfiguration {
 
 	public abstract int getPort();
 
