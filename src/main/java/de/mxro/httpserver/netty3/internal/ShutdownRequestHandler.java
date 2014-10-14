@@ -25,7 +25,6 @@ import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 
-import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ServerComponent;
 import de.mxro.service.callbacks.ShutdownCallback;
@@ -72,7 +71,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                         sendHttpResponse(
                                 e,
                                 "Access denied. You must supply the master secret for this server as part of the url, eg: http://myserver.com:8900/[your secret]"
-                                        .getBytes("UTF-8"), 403, "text/plain");
+                                .getBytes("UTF-8"), 403, "text/plain");
 
                         return;
                     } catch (final Throwable t) {
@@ -89,7 +88,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                         try {
                             // new Exception("Shutdown successful")
                             // .printStackTrace();
-                            Netty3Server.sendHttpSuccess(e, "Shutdown successful.".getBytes("UTF-8"), "text/plain");
+                            sendHttpSuccess(e, "Shutdown successful.".getBytes("UTF-8"), "text/plain");
 
                             final TimerTask stopShutdownServer = new TimerTask() {
 
