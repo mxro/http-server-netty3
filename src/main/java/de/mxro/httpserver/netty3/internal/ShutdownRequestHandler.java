@@ -5,16 +5,25 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
+import static org.jboss.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
+import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.jboss.netty.channel.ChannelFuture;
+import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.jboss.netty.handler.codec.http.HttpResponse;
+import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 
 import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
@@ -27,8 +36,21 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
     final ServerComponent shutdownOperations;
     Netty3ServerComponent thisServer;
 
+    private static void sendHttpResponse(final MessageEvent event, final byte[] bytes, final int responseCode,
+            final String contentType) {
+
+        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, HttpResponseStatus.valueOf(responseCode));
+
+        final ChannelBuffer buffer = ChannelBuffers.wrappedBuffer(bytes);
+        response.setContent(buffer);
+        response.setHeader(CONTENT_TYPE, contentType);
+
+        final ChannelFuture future = event.getChannel().write(response);
+        future.addListener(ChannelFutureListener.CLOSE);
+    }
+
     private static void sendHttpSuccess(final MessageEvent event, final byte[] bytes, final String contentType) {
-        Netty3Server.sendHttpResponse(event, bytes, OK.getCode(), contentType);
+        sendHttpResponse(event, bytes, OK.getCode(), contentType);
     }
 
     @Override
@@ -47,11 +69,10 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                 if (!requestUri.replace("/", "").equals(secret)) {
 
                     try {
-                        Netty3Server
-                                .sendHttpResponse(
-                                        e,
-                                        "Access denied. You must supply the master secret for this server as part of the url, eg: http://myserver.com:8900/[your secret]"
-                                                .getBytes("UTF-8"), 403, "text/plain");
+                        sendHttpResponse(
+                                e,
+                                "Access denied. You must supply the master secret for this server as part of the url, eg: http://myserver.com:8900/[your secret]"
+                                        .getBytes("UTF-8"), 403, "text/plain");
 
                         return;
                     } catch (final Throwable t) {

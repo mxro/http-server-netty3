@@ -24,7 +24,6 @@ import de.mxro.httpserver.IPVersion;
 import de.mxro.httpserver.Request;
 import de.mxro.httpserver.Response;
 import de.mxro.httpserver.netty3.ByteStreamHandler;
-import de.mxro.httpserver.netty3.Netty3Server;
 
 public class SocketWrapper implements ByteStreamHandler {
 
@@ -144,7 +143,7 @@ public class SocketWrapper implements ByteStreamHandler {
                     return;
                 }
 
-                Netty3Server.sendFullHttpResponse(e, response.getContent(), response.getResponseCode(),
+                HttpUtils.sendFullHttpResponse(e, response.getContent(), response.getResponseCode(),
                         response.getHeaders());
 
             }

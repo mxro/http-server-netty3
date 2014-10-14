@@ -5,8 +5,6 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3;
 
-import static org.jboss.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
-import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 import java.net.InetSocketAddress;
@@ -24,7 +22,6 @@ import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
-import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 
@@ -65,54 +62,11 @@ public class Netty3Server {
             }
         }
 
-        response.setHeader("Connection", "keep-alive");
         // response.setHeader(CONTENT_TYPE, contentType);
 
         final ChannelFuture future = event.getChannel().write(response);
         future.addListener(ChannelFutureListener.CLOSE);
 
-    }
-
-    public static void sendFullHttpResponse(final MessageEvent event, final byte[] bytes, final int responseCode,
-            final Map<String, String> headerFields) {
-
-        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, HttpResponseStatus.valueOf(responseCode));
-
-        final ChannelBuffer buffer = ChannelBuffers.wrappedBuffer(bytes);
-        response.setContent(buffer);
-
-        if (headerFields != null) {
-            for (final Entry<String, String> header : headerFields.entrySet()) {
-
-                if (header.getKey() != null) {
-                    response.setHeader(header.getKey(), header.getValue());
-                }
-            }
-        }
-
-        response.setHeader(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-        // response.setHeader(CONTENT_TYPE, contentType);
-
-        final ChannelFuture future = event.getChannel().write(response);
-        future.addListener(ChannelFutureListener.CLOSE);
-
-    }
-
-    public static void sendHttpResponse(final MessageEvent event, final byte[] bytes, final int responseCode,
-            final String contentType) {
-
-        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, HttpResponseStatus.valueOf(responseCode));
-
-        final ChannelBuffer buffer = ChannelBuffers.wrappedBuffer(bytes);
-        response.setContent(buffer);
-        response.setHeader(CONTENT_TYPE, contentType);
-
-        final ChannelFuture future = event.getChannel().write(response);
-        future.addListener(ChannelFutureListener.CLOSE);
-    }
-
-    public static void sendHttpSuccess(final MessageEvent event, final byte[] bytes, final String contentType) {
-        sendHttpResponse(event, bytes, OK.getCode(), contentType);
     }
 
     public static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss zzz";
