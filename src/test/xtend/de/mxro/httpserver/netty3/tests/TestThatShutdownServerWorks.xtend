@@ -36,7 +36,9 @@ class TestThatShutdownServerWorks {
 			res.add(Byte.valueOf( b));
 		}
 		
-		res.toArray(new byte[] {});
+		val Byte[] data = res.toArray(#[]);
+		
+		println(new String(data));
 		
 	}
 	
