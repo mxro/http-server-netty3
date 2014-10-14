@@ -5,6 +5,8 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
+import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,8 +16,8 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
-import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.netty3.Netty3Server;
+import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ServerComponent;
 import de.mxro.service.callbacks.ShutdownCallback;
 
@@ -24,6 +26,10 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
     private final String secret;
     final ServerComponent shutdownOperations;
     Netty3ServerComponent thisServer;
+
+    private static void sendHttpSuccess(final MessageEvent event, final byte[] bytes, final String contentType) {
+        Netty3Server.sendHttpResponse(event, bytes, OK.getCode(), contentType);
+    }
 
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
@@ -101,7 +107,7 @@ public class ShutdownRequestHandler extends SimpleChannelUpstreamHandler {
                         System.out.println("Failure while shutting down server: " + t.getMessage());
                         t.printStackTrace();
 
-                        Netty3Server.sendHttpSuccess(e, t.getMessage().getBytes(), "text/plain");
+                        sendHttpSuccess(e, t.getMessage().getBytes(), "text/plain");
 
                     }
 
