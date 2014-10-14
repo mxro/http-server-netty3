@@ -23,12 +23,14 @@
 	</properties>
 
 	<dependencies>
-
+		
 		<dependency>
-			<groupId>de.mxro.service</groupId>
-			<artifactId>service-api</artifactId>
+			<groupId>de.mxro.thrd.netty3</groupId>
+			<artifactId>thrdNetty3</artifactId>
 			<version>[0.0.1,)</version>
 		</dependency>
+		
+	
 
 		<dependency>
 			<groupId>junit</groupId>
