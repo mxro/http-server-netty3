@@ -20,7 +20,11 @@ class TestThatShutdownServerWorks {
 		])
 		
 		
-		new URL("http://localhost:12321/mysecret");
+		val connection = new URL("http://localhost:12321/mysecret").openConnection
+		
+		connection.connect
+		
+		
 		
 		
 	}

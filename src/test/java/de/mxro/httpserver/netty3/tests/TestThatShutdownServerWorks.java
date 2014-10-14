@@ -8,6 +8,7 @@ import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.services.Services;
 import java.net.URL;
+import java.net.URLConnection;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.junit.Test;
 
@@ -29,7 +30,9 @@ public class TestThatShutdownServerWorks {
         }
       };
       final Netty3ServerComponent shutdownServer = AsyncJre.<Netty3ServerComponent>waitFor(_function_1);
-      new URL("http://localhost:12321/mysecret");
+      URL _uRL = new URL("http://localhost:12321/mysecret");
+      final URLConnection connection = _uRL.openConnection();
+      connection.connect();
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
