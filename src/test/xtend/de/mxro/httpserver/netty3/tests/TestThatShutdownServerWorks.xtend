@@ -17,7 +17,7 @@ class TestThatShutdownServerWorks {
 			Netty3Server.start(Services.echoService(), 12322, cb);
 		])
 		
-		val shutdownServer = AsyncJre.waitFor([cb |
+		AsyncJre.waitFor([cb |
 			Netty3Server.startShutdownServer(12321, "mysecret", server, cb);
 		])
 		
@@ -32,7 +32,7 @@ class TestThatShutdownServerWorks {
 		var List<Byte> res = new ArrayList
 		b = is.read()
 		while (b > -1) {
-			res.add(b);
+			res.add(Byte.valueOf( b));
 		}
 		
 		
