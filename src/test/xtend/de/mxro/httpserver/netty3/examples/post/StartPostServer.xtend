@@ -38,11 +38,12 @@ class StartPostServer {
 			
 			
 			<script>
+				var text = "";
 				setInterval(function() {
 				 $.ajax({
 				 	        type: "POST",
 		                    url: "/service",
-		                    data:  "<p>Hello!</p>",
+		                    data:  "Some big chunk of data follows: "+text,
 		                    processData: false,
 		                    contentType: 'text',
 		                    dataType: 'text',

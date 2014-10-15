@@ -68,6 +68,9 @@ public class StartPostServer {
       _builder.append("<script>");
       _builder.newLine();
       _builder.append("\t\t");
+      _builder.append("var text = \"\";");
+      _builder.newLine();
+      _builder.append("\t\t");
       _builder.append("setInterval(function() {");
       _builder.newLine();
       _builder.append("\t\t ");
@@ -80,7 +83,7 @@ public class StartPostServer {
       _builder.append("url: \"/service\",");
       _builder.newLine();
       _builder.append("                    ");
-      _builder.append("data:  \"<p>Hello!</p>\",");
+      _builder.append("data:  \"Some big chunk of data follows: \"+text,");
       _builder.newLine();
       _builder.append("                    ");
       _builder.append("processData: false,");
