@@ -71,7 +71,7 @@ public class StartPostServer {
       _builder.append("var text = \"\";");
       _builder.newLine();
       _builder.append("\t\t");
-      _builder.append("for (var i=0;i<2000;i++) {");
+      _builder.append("for (var i=0;i<20;i++) {");
       _builder.newLine();
       _builder.append("\t\t\t");
       _builder.append("text += \"\"+Math.random();");

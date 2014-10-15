@@ -39,7 +39,7 @@ class StartPostServer {
 			
 			<script>
 				var text = "";
-				for (var i=0;i<2000;i++) {
+				for (var i=0;i<20;i++) {
 					text += ""+Math.random();
 				}
 				setInterval(function() {
