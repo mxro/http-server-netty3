@@ -66,7 +66,7 @@ public class SocketWrapper implements ByteStreamHandler {
         }
         final HashMap<String, String> headers = new HashMap<String, String>();
 
-        for (final Entry<String, String> en : request.getHeaders()) {
+        for (final Entry<String, String> en : request.headers()) {
             headers.put(en.getKey(), en.getValue());
         }
 
