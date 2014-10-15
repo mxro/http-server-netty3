@@ -15,8 +15,6 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
-import de.mxro.httpserver.netty3.ByteStreamHandler;
-
 /**
  * 
  * @author <a href="http://www.mxro.de/">Max Rohde</a>
@@ -24,7 +22,7 @@ import de.mxro.httpserver.netty3.ByteStreamHandler;
  */
 public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
-    protected final ByteStreamHandler byteStreamHandler;
+    protected final SocketWrapper byteStreamHandler;
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
@@ -77,7 +75,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     }
 
-    public HttpRequestHandler(final ByteStreamHandler byteStreamHandler) {
+    public HttpRequestHandler(final SocketWrapper byteStreamHandler) {
         super();
         this.byteStreamHandler = byteStreamHandler;
 
