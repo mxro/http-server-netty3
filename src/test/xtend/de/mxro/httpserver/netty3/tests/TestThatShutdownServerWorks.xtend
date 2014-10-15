@@ -30,9 +30,7 @@ class TestThatShutdownServerWorks {
 
 		val is = connection.inputStream
 
-
-		Assert.assertTrue(getString(is).container('successful'))
-	
+		Assert.assertTrue(getString(is).contains('successful'))
 
 	}
 
