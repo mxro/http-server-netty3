@@ -7,9 +7,10 @@ public abstract class Netty3ServerConfiguration {
 
     public abstract int port();
 
+    public abstract HttpService service();
+
     public abstract boolean getUseSsl();
 
     public abstract SslKeyStoreData getSslKeyStore();
 
-    public abstract HttpService service();
 }
