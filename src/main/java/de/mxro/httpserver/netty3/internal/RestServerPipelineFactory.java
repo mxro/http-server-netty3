@@ -15,7 +15,6 @@ import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
 import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 import org.jboss.netty.handler.ssl.SslHandler;
 import org.jboss.netty.handler.timeout.IdleStateHandler;
-import org.jboss.netty.util.HashedWheelTimer;
 import org.jboss.netty.util.Timer;
 
 import de.mxro.httpserver.netty3.ByteStreamHandler;
@@ -56,8 +55,8 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
 
         pipeline.addLast("deflater", new CustomHttpContentCompressor());
         pipeline.addLast("aggregator", new HttpChunkAggregator(5242880));
-        pipeline.addLast("idlefind", idleStateHandler);
 
+        pipeline.addLast("idlefind", idleStateHandler);
         pipeline.addLast("idlehandler", new IdleHandler());
 
         pipeline.addLast("handler", new HttpRequestHandler(handler));
@@ -66,14 +65,12 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
     }
 
     public RestServerPipelineFactory(final ByteStreamHandler handler, final boolean useSsl,
-            final SslKeyStoreData sslKeyStore) {
+            final SslKeyStoreData sslKeyStore, final Timer timer) {
         super();
         this.useSsl = useSsl;
         this.handler = handler;
         this.sslKeyStore = sslKeyStore;
 
-        this.timer = new HashedWheelTimer();
-        ;
         this.idleStateHandler = new IdleStateHandler(timer, 20, 20, 0);
     }
 
