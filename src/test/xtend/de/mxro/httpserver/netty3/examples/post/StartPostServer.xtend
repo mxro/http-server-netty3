@@ -1,15 +1,14 @@
 package de.mxro.httpserver.netty3.examples.post
 
+import de.mxro.async.Async
 import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
-import de.mxro.httpserver.resources.Resources
 import de.mxro.httpserver.services.Services
 import java.util.HashMap
-import de.mxro.async.Async
 
 class StartPostServer {
 
-	def void main(String[] args) {
+	def static void main(String[] args) {
 		
 		val services = new HashMap
 		
@@ -18,7 +17,7 @@ class StartPostServer {
 
 		
 		val server = AsyncJre.waitFor([cb |
-			Netty3Server.start(Services.dispatcher(services), 8080, cb)
+			Netty3Server.start(Services.dispatcher(services), 8081, cb)
 			
 			])
 		 
@@ -38,7 +37,7 @@ class StartPostServer {
 			
 			
 			<script>
-			
+				setInterval(function() {
 				 $.ajax({
 				 	        type: "POST",
 		                    url: "/service",
@@ -54,6 +53,7 @@ class StartPostServer {
 		                    }
 		                    
 		                });
+		                }, 500);
 			
 			
 			</script>

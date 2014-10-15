@@ -18,7 +18,7 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class StartPostServer {
-  public void main(final String[] args) {
+  public static void main(final String[] args) {
     try {
       final HashMap<String, HttpService> services = new HashMap<String, HttpService>();
       HttpService _echo = Services.echo();
@@ -29,7 +29,7 @@ public class StartPostServer {
       final Deferred<Netty3ServerComponent> _function = new Deferred<Netty3ServerComponent>() {
         public void get(final ValueCallback<Netty3ServerComponent> cb) {
           HttpService _dispatcher = Services.dispatcher(services);
-          Netty3Server.start(_dispatcher, 8080, cb);
+          Netty3Server.start(_dispatcher, 8081, cb);
         }
       };
       final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function);
@@ -66,7 +66,8 @@ public class StartPostServer {
       _builder.append("\t");
       _builder.append("<script>");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
+      _builder.append("setInterval(function() {");
       _builder.newLine();
       _builder.append("\t\t ");
       _builder.append("$.ajax({");
@@ -107,6 +108,9 @@ public class StartPostServer {
       _builder.newLine();
       _builder.append("                ");
       _builder.append("});");
+      _builder.newLine();
+      _builder.append("                ");
+      _builder.append("}, 500);");
       _builder.newLine();
       _builder.append("\t");
       _builder.newLine();
