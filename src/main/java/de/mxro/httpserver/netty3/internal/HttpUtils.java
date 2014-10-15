@@ -50,6 +50,7 @@ public class HttpUtils {
             for (final Entry<String, String> header : headerFields.entrySet()) {
 
                 if (header.getKey() != null) {
+
                     response.setHeader(header.getKey(), header.getValue());
                 }
             }
