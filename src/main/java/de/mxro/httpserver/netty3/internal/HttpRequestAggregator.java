@@ -50,11 +50,17 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
         }
         final ByteArrayOutputStream receivedData = new ByteArrayOutputStream();
         final ChannelBuffer buffer = request.getContent();
-        // buffer.wr
+        // buffer.re
+        if (buffer.readable()) {
+            final byte[] ar = new byte[buffer.readableBytes()];
+            buffer.readBytes(ar);
+            receivedData.write(ar);
 
-        receivedData.write(buffer.array());
+            byteStreamHandler.processRequest(receivedData, e);
+            return;
+        }
 
-        byteStreamHandler.processRequest(receivedData, e);
+        throw new RuntimeException("Readable bytes excpected.");
 
     }
 
