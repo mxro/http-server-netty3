@@ -41,7 +41,6 @@ class StartPostServer {
 				var text = "";
 				for (var i=0;i<2000;i++) {
 					text += ""+Math.random();
-					
 				}
 				setInterval(function() {
 				 $.ajax({

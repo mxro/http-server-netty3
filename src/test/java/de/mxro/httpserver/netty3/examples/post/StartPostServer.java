@@ -76,8 +76,6 @@ public class StartPostServer {
       _builder.append("\t\t\t");
       _builder.append("text += \"\"+Math.random();");
       _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.newLine();
       _builder.append("\t\t");
       _builder.append("}");
       _builder.newLine();
