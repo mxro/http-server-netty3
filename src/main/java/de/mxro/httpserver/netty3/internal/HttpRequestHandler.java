@@ -40,7 +40,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
-
+        System.out.println("msg processed");
         e.getChannel().getConfig().setConnectTimeoutMillis(5000);
 
         if (e.getChannel().getConfig() instanceof SocketChannelConfig) {
