@@ -50,6 +50,8 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
         }
         final ByteArrayOutputStream receivedData = new ByteArrayOutputStream();
         final ChannelBuffer buffer = request.getContent();
+        // buffer.wr
+
         receivedData.write(buffer.array());
 
         byteStreamHandler.processRequest(receivedData, e);
