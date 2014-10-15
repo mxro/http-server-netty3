@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<artifactId>http-server-netty3</artifactId>
 	<groupId>de.mxro.httpserver.netty3</groupId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<description>An implementation of the http-server API for Netty 3.
 	</description>
 	<url>https://github.com/mxro/http-server-netty3</url>

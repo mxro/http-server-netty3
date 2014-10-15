@@ -9,8 +9,6 @@ import static org.jboss.netty.channel.Channels.pipeline;
 
 import javax.net.ssl.SSLEngine;
 
-import mx.sslutils.MxSslUtils;
-
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.handler.codec.http.HttpChunkAggregator;
@@ -21,6 +19,7 @@ import org.jboss.netty.handler.ssl.SslHandler;
 
 import de.mxro.httpserver.netty3.ByteStreamHandler;
 import de.mxro.sslutils.SslKeyStoreData;
+import de.mxro.sslutils.SslUtils;
 
 /**
  * 
@@ -40,7 +39,7 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
         final ChannelPipeline pipeline = pipeline();
 
         if (useSsl) {
-            final SSLEngine engine = MxSslUtils.createContextForCertificate(sslKeyStore).createSSLEngine();
+            final SSLEngine engine = SslUtils.createContextForCertificate(sslKeyStore).createSSLEngine();
 
             engine.setUseClientMode(false);
             final SslHandler sslHandler = new SslHandler(engine);
