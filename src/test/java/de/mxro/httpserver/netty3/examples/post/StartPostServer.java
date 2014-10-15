@@ -71,6 +71,17 @@ public class StartPostServer {
       _builder.append("var text = \"\";");
       _builder.newLine();
       _builder.append("\t\t");
+      _builder.append("for (var i=0;i<2000;i++) {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("text += \"\"+Math.random();");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
       _builder.append("setInterval(function() {");
       _builder.newLine();
       _builder.append("\t\t ");
