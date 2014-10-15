@@ -3,10 +3,11 @@ package de.mxro.httpserver.netty3.tests
 import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
+import java.io.InputStream
 import java.net.URL
 import java.util.ArrayList
-import java.util.Arrays
 import java.util.List
+import java.util.Scanner
 import org.junit.Test
 
 class TestThatShutdownServerWorks {
@@ -41,5 +42,11 @@ class TestThatShutdownServerWorks {
 		println(new String(data));
 		
 	}
+	
+	def static  getString(InputStream is) {
+    val Scanner s = new Scanner(is).useDelimiter("\\A");
+    return s.hasNext() ? s.next() : "";
+    }
+
 	
 }
