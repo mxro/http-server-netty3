@@ -54,6 +54,7 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
             if (!request.isChunked()) {
                 byteStreamHandler.processRequest(receivedData, e);
             } else {
+                System.out.println("received chunked request!!");
                 chunked = true;
 
             }
