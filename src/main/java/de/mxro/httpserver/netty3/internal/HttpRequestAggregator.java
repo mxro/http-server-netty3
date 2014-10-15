@@ -28,7 +28,7 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
     protected final ByteStreamHandler byteStreamHandler;
 
     private final ByteArrayOutputStream receivedData;
-    private boolean chunked;
+    private final boolean chunked;
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
@@ -38,15 +38,21 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
 
-        e.getChannel().getConfig().setConnectTimeoutMillis(15000);
+        e.getChannel().getConfig().setConnectTimeoutMillis(5000);
 
         if (e.getChannel().getConfig() instanceof SocketChannelConfig) {
             final SocketChannelConfig config = (SocketChannelConfig) e.getChannel().getConfig();
             config.setKeepAlive(true);
+
         }
 
         if (!chunked) {
             final HttpRequest request = (HttpRequest) e.getMessage();
+
+            if (request.isChunked()) {
+                HttpUtils.sendHttpError(e, this.getClass().getName() + ": Cannot process chunked requests.");
+                return;
+            }
 
             final ChannelBuffer buffer = request.getContent();
             receivedData.write(buffer.array());
@@ -54,8 +60,9 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
             if (!request.isChunked()) {
                 byteStreamHandler.processRequest(receivedData, e);
             } else {
-                System.out.println("received chunked request!!");
-                chunked = true;
+
+                // System.out.println("received chunked request!!");
+                // chunked = true;
 
             }
 
