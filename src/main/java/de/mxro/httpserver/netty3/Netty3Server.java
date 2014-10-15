@@ -85,7 +85,7 @@ public class Netty3Server {
 
         final ServerBootstrap bootstrap = new ServerBootstrap(socketChannelFactory);
 
-        bootstrap.setOption("child.keepAlive", true);
+        // bootstrap.setOption("child.keepAlive", true);
 
         final ByteStreamHandler messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
 

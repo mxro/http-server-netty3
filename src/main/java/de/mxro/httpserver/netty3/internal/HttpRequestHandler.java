@@ -13,7 +13,6 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
-import org.jboss.netty.channel.socket.SocketChannelConfig;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
 import de.mxro.httpserver.netty3.ByteStreamHandler;
@@ -47,13 +46,14 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
         System.out.println("msg processed");
-        e.getChannel().getConfig().setConnectTimeoutMillis(5000);
+        e.getChannel().getConfig().setConnectTimeoutMillis(3000);
 
-        if (e.getChannel().getConfig() instanceof SocketChannelConfig) {
-            final SocketChannelConfig config = (SocketChannelConfig) e.getChannel().getConfig();
-            config.setKeepAlive(true);
+        // if (e.getChannel().getConfig() instanceof SocketChannelConfig) {
+        // final SocketChannelConfig config = (SocketChannelConfig)
+        // e.getChannel().getConfig();
+        // config.setKeepAlive(true);
 
-        }
+        // }
 
         final HttpRequest request = (HttpRequest) e.getMessage();
 
