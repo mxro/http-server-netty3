@@ -20,7 +20,7 @@ import org.jboss.netty.handler.codec.http.HttpRequest;
  */
 public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
-    protected final ByteStreamHandler byteStreamHandler;
+    protected final BytesHandler byteStreamHandler;
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
@@ -50,14 +50,11 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
             HttpUtils.sendHttpError(e, this.getClass().getName() + ": Cannot process chunked requests.");
             return;
         }
-        // final ByteArrayOutputStream receivedData = new
-        // ByteArrayOutputStream();
+
         final ChannelBuffer buffer = request.getContent();
 
         if (buffer.readable()) {
             final byte[] receivedData = new byte[buffer.readableBytes()];
-            // buffer.readBytes(ar);
-            // receivedData.write(ar);
             byteStreamHandler.processRequest(receivedData, e);
             return;
         } else {
@@ -67,7 +64,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     }
 
-    public HttpRequestHandler(final ByteStreamHandler byteStreamHandler) {
+    public HttpRequestHandler(final BytesHandler byteStreamHandler) {
         super();
         this.byteStreamHandler = byteStreamHandler;
 

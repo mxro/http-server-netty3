@@ -23,7 +23,7 @@ import de.mxro.httpserver.IPVersion;
 import de.mxro.httpserver.Request;
 import de.mxro.httpserver.Response;
 
-public class ByteStreamHandler {
+public final class BytesHandler {
 
     private final HttpService service;
 
@@ -154,7 +154,7 @@ public class ByteStreamHandler {
      * 
      * @param service
      */
-    public ByteStreamHandler(final HttpService service) {
+    public BytesHandler(final HttpService service) {
         super();
         this.service = service;
 
