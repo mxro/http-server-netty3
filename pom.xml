@@ -31,11 +31,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>de.mxro.thrd.netty3</groupId>
-			<artifactId>thrdNetty3</artifactId>
-			<version>[0.0.1,)</version>
+			<groupId>io.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.6.6.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<artifactId>java-ssl-utils</artifactId>
 			<groupId>de.mxro.sslutils</groupId>
@@ -48,14 +48,14 @@
 			<artifactId>mxJREUtils</artifactId>
 			<version>[0.0.1,)</version>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
 			<version>2.7.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
