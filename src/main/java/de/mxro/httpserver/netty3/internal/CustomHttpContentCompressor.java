@@ -3,8 +3,6 @@ package de.mxro.httpserver.netty3.internal;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.codec.http.HttpContentCompressor;
-import org.jboss.netty.handler.codec.http.HttpHeaders;
-import org.jboss.netty.handler.codec.http.HttpMessage;
 
 public class CustomHttpContentCompressor extends HttpContentCompressor {
 
@@ -20,13 +18,15 @@ public class CustomHttpContentCompressor extends HttpContentCompressor {
 
         super.writeRequested(ctx, e);
 
-        if (e.getMessage() instanceof HttpMessage) {
-            final HttpMessage httpMessage = (HttpMessage) e.getMessage();
-            final int length = httpMessage.getContent().readableBytes();
-
-            httpMessage.headers().add(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(length));
-            System.out.println("add length " + length);
-        }
+        /*
+         * if (e.getMessage() instanceof HttpMessage) { final HttpMessage
+         * httpMessage = (HttpMessage) e.getMessage(); final int length =
+         * httpMessage.getContent().readableBytes();
+         * 
+         * httpMessage.headers().add(HttpHeaders.Names.CONTENT_LENGTH,
+         * String.valueOf(length)); System.out.println("add length " + length);
+         * }
+         */
 
     }
 
