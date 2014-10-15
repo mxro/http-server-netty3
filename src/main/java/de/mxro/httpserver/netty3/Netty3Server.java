@@ -25,7 +25,8 @@ import de.mxro.sslutils.SslKeyStoreData;
 public class Netty3Server {
 
     /**
-     * Secret must be supplied as URI path.
+     * Server which triggers a shutdown for another server, if the correct
+     * secret is supplied as the URI request URL.
      * 
      * @param port
      * @param secret
