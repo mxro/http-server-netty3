@@ -22,7 +22,7 @@ import de.mxro.httpserver.netty3.ByteStreamHandler;
  * @author <a href="http://www.mxro.de/">Max Rohde</a>
  * 
  */
-public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
+public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     protected final ByteStreamHandler byteStreamHandler;
 
@@ -64,7 +64,7 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
 
     }
 
-    public HttpRequestAggregator(final ByteStreamHandler byteStreamHandler) {
+    public HttpRequestHandler(final ByteStreamHandler byteStreamHandler) {
         super();
         this.byteStreamHandler = byteStreamHandler;
 
