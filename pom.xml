@@ -399,9 +399,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git@github.com:mxro/http-server.git</connection>
-		<url>https://github.com/mxro/http-server</url>
-		<developerConnection>scm:git:git@github.com:mxro/http-server.git
+		<connection>scm:git:git@github.com:mxro/http-server-netty3.git</connection>
+		<url>https://github.com/mxro/http-server-netty3</url>
+		<developerConnection>scm:git:git@github.com:mxro/http-server-netty3.git
 		</developerConnection>
 	</scm>
 
