@@ -58,7 +58,7 @@ public class HttpUtils {
         response.setHeader(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
         response.setHeader(HttpHeaders.Names.CONTENT_LENGTH, bytes.length);
         response.setHeader(HttpHeaders.Names.SERVER, "aj");
-        response.setHeader("version", "HTTP/1.1");
+        response.setHeader("Version", "HTTP/1.1");
 
         final ChannelFuture future = event.getChannel().write(response);
         future.addListener(ChannelFutureListener.CLOSE);
