@@ -56,7 +56,7 @@ public class HttpUtils {
         }
 
         response.setHeader(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-        // response.setHeader(CONTENT_TYPE, contentType);
+        response.setHeader(HttpHeaders.Names.CONTENT_LENGTH, bytes.length);
 
         final ChannelFuture future = event.getChannel().write(response);
         future.addListener(ChannelFutureListener.CLOSE);
