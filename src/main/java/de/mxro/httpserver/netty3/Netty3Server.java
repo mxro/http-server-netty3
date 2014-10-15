@@ -53,13 +53,13 @@ public class Netty3Server {
             }
 
             @Override
-            public HttpService getService() {
+            public HttpService service() {
 
                 return Services.shutdown(secret, operations, ownServer);
             }
 
             @Override
-            public int getPort() {
+            public int port() {
                 return port;
             }
         };
@@ -89,7 +89,7 @@ public class Netty3Server {
 
         // bootstrap.setOption("child.keepAlive", true);
 
-        final BytesHandler messageHandler = new BytesHandler(Services.safeShutdown(conf.getService()));
+        final BytesHandler messageHandler = new BytesHandler(Services.safeShutdown(conf.service()));
 
         final Timer timer = new HashedWheelTimer();
 
@@ -97,9 +97,9 @@ public class Netty3Server {
                 .getSslKeyStore(), timer));
 
         // Bind and start to accept incoming connections.
-        final Channel server = bootstrap.bind(new InetSocketAddress(conf.getPort()));
+        final Channel server = bootstrap.bind(new InetSocketAddress(conf.port()));
 
-        callback.onSuccess(new InternalNettyRestServer(server, conf.getPort(), bootstrap, timer));
+        callback.onSuccess(new InternalNettyRestServer(server, conf.port(), bootstrap, timer));
 
     }
 
@@ -118,12 +118,12 @@ public class Netty3Server {
             }
 
             @Override
-            public HttpService getService() {
+            public HttpService service() {
                 return service;
             }
 
             @Override
-            public int getPort() {
+            public int port() {
                 return port;
             }
         };
