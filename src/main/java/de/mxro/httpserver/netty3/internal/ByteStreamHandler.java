@@ -1,7 +1,6 @@
 package de.mxro.httpserver.netty3.internal;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -28,7 +27,7 @@ public class ByteStreamHandler {
 
     private final HttpService service;
 
-    public void processRequest(final ByteArrayOutputStream receivedData, final MessageEvent e) {
+    public void processRequest(final byte[] receivedData, final MessageEvent e) {
         final HttpRequest request = (HttpRequest) e.getMessage();
         final Response response = HttpServer.createResponse();
 
@@ -121,7 +120,7 @@ public class ByteStreamHandler {
                 if (byteArray != null) {
                     return byteArray;
                 } else {
-                    byteArray = receivedData.toByteArray();
+                    byteArray = receivedData;
                     return byteArray;
                 }
 

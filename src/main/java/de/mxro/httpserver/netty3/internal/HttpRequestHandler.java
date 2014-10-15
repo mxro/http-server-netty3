@@ -5,8 +5,6 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
-import java.io.ByteArrayOutputStream;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -52,17 +50,18 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
             HttpUtils.sendHttpError(e, this.getClass().getName() + ": Cannot process chunked requests.");
             return;
         }
-        final ByteArrayOutputStream receivedData = new ByteArrayOutputStream();
+        // final ByteArrayOutputStream receivedData = new
+        // ByteArrayOutputStream();
         final ChannelBuffer buffer = request.getContent();
 
         if (buffer.readable()) {
-            final byte[] ar = new byte[buffer.readableBytes()];
-            buffer.readBytes(ar);
-            receivedData.write(ar);
+            final byte[] receivedData = new byte[buffer.readableBytes()];
+            // buffer.readBytes(ar);
+            // receivedData.write(ar);
             byteStreamHandler.processRequest(receivedData, e);
             return;
         } else {
-            byteStreamHandler.processRequest(new ByteArrayOutputStream(), e);
+            byteStreamHandler.processRequest(new byte[0], e);
             return;
         }
 
