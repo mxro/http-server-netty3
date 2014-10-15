@@ -17,13 +17,15 @@ class StartPostServer {
 		
 		
 		
-		AsyncJre.waitFor([cb |
+		val server = AsyncJre.waitFor([cb |
 			Netty3Server.start(Services.dispatcher(services), 8080, cb)
 			
 			])
 		 
-		 
-		 
+		 println 'Press key to stop server'
+		 System.in.read
+		
+		server.shutdown().get
 		
 	}
 
