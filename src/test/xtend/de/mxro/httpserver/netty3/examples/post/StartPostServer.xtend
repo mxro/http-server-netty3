@@ -42,7 +42,7 @@ class StartPostServer {
 				 $.ajax({
 				 	        type: "POST",
 		                    url: "/service",
-		                    data:  "Hello!",
+		                    data:  "<p>Hello!</p>",
 		                    processData: false,
 		                    contentType: 'text',
 		                    dataType: 'text',

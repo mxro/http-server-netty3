@@ -80,7 +80,7 @@ public class StartPostServer {
       _builder.append("url: \"/service\",");
       _builder.newLine();
       _builder.append("                    ");
-      _builder.append("data:  \"Hello!\",");
+      _builder.append("data:  \"<p>Hello!</p>\",");
       _builder.newLine();
       _builder.append("                    ");
       _builder.append("processData: false,");
