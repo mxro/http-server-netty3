@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
@@ -62,7 +61,7 @@ public class HttpUtils {
         // response.headers().add("Version", "HTTP/1.1");
 
         final ChannelFuture future = event.getChannel().write(response);
-        future.addListener(ChannelFutureListener.CLOSE);
+        // future.addListener(ChannelFutureListener.CLOSE);
 
     }
 
