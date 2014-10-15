@@ -55,6 +55,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
         if (buffer.readable()) {
             final byte[] receivedData = new byte[buffer.readableBytes()];
+            buffer.readBytes(receivedData);
             byteStreamHandler.processRequest(receivedData, e);
             return;
         } else {
