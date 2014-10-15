@@ -18,6 +18,7 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
     protected final Channel channel;
     protected final int port;
     protected final ServerBootstrap bootstrap;
+    private final Timer timer;
 
     @Override
     public Channel getChannel() {
@@ -40,11 +41,13 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
 
     }
 
-    public InternalNettyRestServer(final Channel channel, final int port, final ServerBootstrap bootstrap) {
+    public InternalNettyRestServer(final Channel channel, final int port, final ServerBootstrap bootstrap,
+            final Timer timer) {
         super();
         this.channel = channel;
         this.port = port;
         this.bootstrap = bootstrap;
+        this.timer = timer;
     }
 
     @Override

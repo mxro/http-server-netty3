@@ -72,6 +72,8 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
         this.sslKeyStore = sslKeyStore;
 
         this.idleStateHandler = new IdleStateHandler(timer, 20, 20, 0);
+
+        this.timer = timer;
     }
 
 }

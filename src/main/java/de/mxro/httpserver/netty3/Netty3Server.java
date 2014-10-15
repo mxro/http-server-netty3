@@ -11,6 +11,8 @@ import java.util.concurrent.Executors;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.jboss.netty.util.HashedWheelTimer;
+import org.jboss.netty.util.Timer;
 
 import de.mxro.async.Value;
 import de.mxro.async.callbacks.ValueCallback;
@@ -89,8 +91,10 @@ public class Netty3Server {
 
         final ByteStreamHandler messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
 
+        final Timer timer = new HashedWheelTimer();
+
         bootstrap.setPipelineFactory(new RestServerPipelineFactory(messageHandler, conf.getUseSsl(), conf
-                .getSslKeyStore()));
+                .getSslKeyStore(), timer));
 
         // Bind and start to accept incoming connections.
         final Channel server = bootstrap.bind(new InetSocketAddress(conf.getPort()));
