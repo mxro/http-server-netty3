@@ -33,6 +33,7 @@ public class StartPostServer {
         }
       };
       final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function);
+      InputOutput.<String>println("Open page at http://localhost:8081");
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
       final Deferred<Success> _function_1 = new Deferred<Success>() {

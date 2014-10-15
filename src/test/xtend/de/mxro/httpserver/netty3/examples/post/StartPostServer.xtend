@@ -21,6 +21,7 @@ class StartPostServer {
 			
 			])
 		 
+		 println("Open page at http://localhost:8081")
 		 println('Press key to stop server')
 		 System.in.read
 		
