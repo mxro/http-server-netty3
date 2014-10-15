@@ -49,7 +49,6 @@
 			<version>[0.0.1,)</version>
 		</dependency>
 	
-	
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
