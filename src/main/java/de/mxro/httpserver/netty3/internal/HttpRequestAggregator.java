@@ -58,9 +58,10 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
 
             byteStreamHandler.processRequest(receivedData, e);
             return;
+        } else {
+            byteStreamHandler.processRequest(new ByteArrayOutputStream(), e);
+            return;
         }
-
-        HttpUtils.sendHttpError(e, this.getClass().getName() + ": No readable bytes in request.");
 
     }
 
