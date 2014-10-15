@@ -7,16 +7,23 @@ import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.services.Services;
+import java.util.HashMap;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 
 @SuppressWarnings("all")
 public class StartPostServer {
   public void main(final String[] args) {
+    final HashMap<String, HttpService> services = new HashMap<String, HttpService>();
+    HttpService _echo = Services.echo();
+    services.put("/service", _echo);
+    byte[] _bytes = StartPostServer.PAGE.getBytes();
+    HttpService _data = Services.data(_bytes, "text/html");
+    services.put("*", _data);
     final Deferred<Netty3ServerComponent> _function = new Deferred<Netty3ServerComponent>() {
       public void get(final ValueCallback<Netty3ServerComponent> cb) {
-        HttpService _echo = Services.echo();
-        Netty3Server.start(_echo, 8080, cb);
+        HttpService _dispatcher = Services.dispatcher(services);
+        Netty3Server.start(_dispatcher, 8080, cb);
       }
     };
     AsyncJre.<Netty3ServerComponent>waitFor(_function);

@@ -2,14 +2,23 @@ package de.mxro.httpserver.netty3.examples.post
 
 import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
+import de.mxro.httpserver.resources.Resources
 import de.mxro.httpserver.services.Services
+import java.util.HashMap
 
 class StartPostServer {
 
 	def void main(String[] args) {
 		
+		val services = new HashMap
+		
+		services.put("/service", Services.echo)
+		services.put("*", Services.data(PAGE.bytes, "text/html"))
+		
+		
+		
 		AsyncJre.waitFor([cb |
-			Netty3Server.start(Services.echo(), 8080, cb)
+			Netty3Server.start(Services.dispatcher(services), 8080, cb)
 			
 			])
 		 
