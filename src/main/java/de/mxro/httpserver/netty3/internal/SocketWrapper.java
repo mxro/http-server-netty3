@@ -23,13 +23,11 @@ import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.IPVersion;
 import de.mxro.httpserver.Request;
 import de.mxro.httpserver.Response;
-import de.mxro.httpserver.netty3.ByteStreamHandler;
 
-public class SocketWrapper implements ByteStreamHandler {
+public class SocketWrapper {
 
     private final HttpService service;
 
-    @Override
     public void processRequest(final ByteArrayOutputStream receivedData, final MessageEvent e) {
         final HttpRequest request = (HttpRequest) e.getMessage();
         final Response response = HttpServer.createResponse();

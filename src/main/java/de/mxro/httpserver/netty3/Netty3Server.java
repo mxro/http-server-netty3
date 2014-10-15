@@ -89,7 +89,7 @@ public class Netty3Server {
 
         // bootstrap.setOption("child.keepAlive", true);
 
-        final ByteStreamHandler messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
+        final SocketWrapper messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
 
         final Timer timer = new HashedWheelTimer();
 
