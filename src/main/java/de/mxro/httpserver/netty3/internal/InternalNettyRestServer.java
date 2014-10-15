@@ -7,6 +7,7 @@ package de.mxro.httpserver.netty3.internal;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
+import org.jboss.netty.util.Timer;
 
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
@@ -18,7 +19,7 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
     protected final Channel channel;
     protected final int port;
     protected final ServerBootstrap bootstrap;
-    private final Timer timer;
+    protected final Timer timer;
 
     @Override
     public Channel getChannel() {
@@ -74,6 +75,7 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
     public void destroy(final SimpleCallback callback) {
 
         channel.close().awaitUninterruptibly(1000 * 20);
+        timer.stop();
         bootstrap.releaseExternalResources();
 
         callback.onSuccess();
