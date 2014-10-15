@@ -5,9 +5,8 @@ import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
 import java.io.InputStream
 import java.net.URL
-import java.util.ArrayList
-import java.util.List
 import java.util.Scanner
+import org.junit.Assert
 import org.junit.Test
 
 class TestThatShutdownServerWorks {
@@ -17,12 +16,12 @@ class TestThatShutdownServerWorks {
 
 		val server = AsyncJre.waitFor(
 			[ cb |
-				Netty3Server.start(Services.echoService(), 12322, cb);
+				Netty3Server.start(Services.echoService(), 12322, cb)
 			])
 
 		AsyncJre.waitFor(
 			[ cb |
-				Netty3Server.startShutdownServer(12321, "mysecret", server, cb);
+				Netty3Server.startShutdownServer(12321, "mysecret", server, cb)
 			])
 
 		val connection = new URL("http://localhost:12321/mysecret").openConnection
@@ -31,15 +30,15 @@ class TestThatShutdownServerWorks {
 
 		val is = connection.inputStream
 
-		
 
-		println(getString(is));
+		Assert.assertTrue(getString(is).container('successful'))
+	
 
 	}
 
 	def static getString(InputStream is) {
-		val Scanner s = new Scanner(is).useDelimiter("\\A");
-		return s.hasNext();
+		val Scanner s = new Scanner(is).useDelimiter("\\A")
+		return s.next
 	}
 
 }
