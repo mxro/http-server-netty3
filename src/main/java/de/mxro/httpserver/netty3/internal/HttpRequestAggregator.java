@@ -60,7 +60,7 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
             return;
         }
 
-        throw new RuntimeException("Readable bytes excpected.");
+        HttpUtils.sendHttpError(e, this.getClass().getName() + ": No readable bytes in request.");
 
     }
 
