@@ -37,11 +37,7 @@
 		</dependency>
 
 
-		<dependency>
-			<artifactId>java-ssl-utils</artifactId>
-			<groupId>de.mxro.sslutils</groupId>
-			<version>[0.0.1,)</version>
-		</dependency>
+		
 
 
 		<dependency>
