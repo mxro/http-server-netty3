@@ -5,8 +5,6 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
-import static org.jboss.netty.channel.Channels.pipeline;
-
 import javax.net.ssl.SSLEngine;
 
 import org.jboss.netty.channel.ChannelHandler;
@@ -42,7 +40,7 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
     @Override
     public ChannelPipeline getPipeline() throws Exception {
 
-        final ChannelPipeline pipeline = pipeline();
+        final ChannelPipeline pipeline = pipeline;
 
         if (useSsl) {
             final SSLEngine engine = SslUtils.createContextForCertificate(sslKeyStore).createSSLEngine();
@@ -58,6 +56,7 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
 
         pipeline.addLast("deflater", new CustomHttpContentCompressor());
         pipeline.addLast("aggregator", new HttpChunkAggregator(5242880));
+        pipeline.addLast("idlefind", idleStateHandler);
 
         pipeline.addLast("idlehandler", new IdleHandler());
 
