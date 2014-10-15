@@ -28,7 +28,7 @@ public class HttpUtils {
             buffer = ChannelBuffers.wrappedBuffer(message.getBytes("UTF-8"));
 
             response.setContent(buffer);
-            response.setHeader(CONTENT_TYPE, "text/plain");
+            response.headers().add(CONTENT_TYPE, "text/plain");
 
             final ChannelFuture future = event.getChannel().write(response);
             future.addListener(ChannelFutureListener.CLOSE);
@@ -50,16 +50,15 @@ public class HttpUtils {
             for (final Entry<String, String> header : headerFields.entrySet()) {
 
                 if (header.getKey() != null) {
-
-                    response.setHeader(header.getKey(), header.getValue());
+                    response.headers().add(header.getKey(), header.getValue());
                 }
             }
         }
 
-        response.setHeader(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-        response.setHeader(HttpHeaders.Names.CONTENT_LENGTH, bytes.length);
-        response.setHeader(HttpHeaders.Names.SERVER, "aj");
-        response.setHeader("Version", "HTTP/1.1");
+        response.headers().add(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+        response.headers().add(HttpHeaders.Names.CONTENT_LENGTH, bytes.length);
+        response.headers().add(HttpHeaders.Names.SERVER, "aj");
+        response.headers().add("Version", "HTTP/1.1");
 
         final ChannelFuture future = event.getChannel().write(response);
         future.addListener(ChannelFutureListener.CLOSE);
