@@ -53,11 +53,11 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
         pipeline.addLast("decoder", new HttpRequestDecoder());
         pipeline.addLast("encoder", new HttpResponseEncoder());
 
-        pipeline.addLast("deflater", new CustomHttpContentCompressor());
-        pipeline.addLast("aggregator", new HttpChunkAggregator(5242880));
-
         pipeline.addLast("idlefind", idleStateHandler);
         pipeline.addLast("idlehandler", new IdleHandler());
+
+        pipeline.addLast("deflater", new CustomHttpContentCompressor());
+        pipeline.addLast("aggregator", new HttpChunkAggregator(5242880));
 
         pipeline.addLast("handler", new HttpRequestHandler(handler));
 
@@ -71,7 +71,7 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
         this.handler = handler;
         this.sslKeyStore = sslKeyStore;
 
-        this.idleStateHandler = new IdleStateHandler(timer, 20, 20, 0);
+        this.idleStateHandler = new IdleStateHandler(timer, 5, 5, 0);
 
     }
 
