@@ -36,16 +36,6 @@
 			<version>3.9.4.Final</version>
 		</dependency>
 
-
-		
-
-
-		<dependency>
-			<groupId>de.mxro.jreutils</groupId>
-			<artifactId>mxJREUtils</artifactId>
-			<version>[0.0.1,)</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
