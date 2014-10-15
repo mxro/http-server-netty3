@@ -10,6 +10,15 @@ public class CustomHttpContentCompressor extends HttpContentCompressor {
 
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
+        if (e.getMessage() instanceof HttpMessage) {
+            final HttpMessage httpMessage = (HttpMessage) e.getMessage();
+            final int length = httpMessage.getContent().array().length;
+
+            // httpMessage.headers().add(HttpHeaders.Names.CONTENT_LENGTH,
+            // length);
+            System.out.println("was " + length);
+        }
+
         super.messageReceived(ctx, e);
 
         if (e.getMessage() instanceof HttpMessage) {
@@ -17,6 +26,7 @@ public class CustomHttpContentCompressor extends HttpContentCompressor {
             final int length = httpMessage.getContent().array().length;
 
             httpMessage.headers().add(HttpHeaders.Names.CONTENT_LENGTH, length);
+            System.out.println("add length " + length);
         }
 
     }
