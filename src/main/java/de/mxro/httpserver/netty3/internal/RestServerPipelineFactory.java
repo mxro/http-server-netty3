@@ -30,7 +30,7 @@ import de.mxro.sslutils.SslUtils;
 public final class RestServerPipelineFactory implements ChannelPipelineFactory {
 
     protected final boolean useSsl;
-    protected final SocketWrapper handler;
+    protected final ByteStreamHandler handler;
     protected SslKeyStoreData sslKeyStore;
 
     private final ChannelHandler idleStateHandler;
@@ -63,7 +63,7 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
         return pipeline;
     }
 
-    public RestServerPipelineFactory(final SocketWrapper handler, final boolean useSsl,
+    public RestServerPipelineFactory(final ByteStreamHandler handler, final boolean useSsl,
             final SslKeyStoreData sslKeyStore, final Timer timer) {
         super();
         this.useSsl = useSsl;

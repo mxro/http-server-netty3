@@ -19,7 +19,7 @@ import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.internal.InternalNettyRestServer;
 import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
-import de.mxro.httpserver.netty3.internal.SocketWrapper;
+import de.mxro.httpserver.netty3.internal.ByteStreamHandler;
 import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
 import de.mxro.sslutils.SslKeyStoreData;
@@ -89,7 +89,7 @@ public class Netty3Server {
 
         // bootstrap.setOption("child.keepAlive", true);
 
-        final SocketWrapper messageHandler = new SocketWrapper(Services.safeShutdown(conf.getService()));
+        final ByteStreamHandler messageHandler = new ByteStreamHandler(Services.safeShutdown(conf.getService()));
 
         final Timer timer = new HashedWheelTimer();
 

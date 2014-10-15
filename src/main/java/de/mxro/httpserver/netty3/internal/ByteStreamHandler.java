@@ -24,7 +24,7 @@ import de.mxro.httpserver.IPVersion;
 import de.mxro.httpserver.Request;
 import de.mxro.httpserver.Response;
 
-public class SocketWrapper {
+public class ByteStreamHandler {
 
     private final HttpService service;
 
@@ -155,7 +155,7 @@ public class SocketWrapper {
      * 
      * @param service
      */
-    public SocketWrapper(final HttpService service) {
+    public ByteStreamHandler(final HttpService service) {
         super();
         this.service = service;
 
