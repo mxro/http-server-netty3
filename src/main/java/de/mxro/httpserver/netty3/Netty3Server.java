@@ -8,8 +8,6 @@ package de.mxro.httpserver.netty3;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-import mx.sslutils.SslKeyStoreData;
-
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
@@ -22,6 +20,7 @@ import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.netty3.internal.SocketWrapper;
 import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
+import de.mxro.sslutils.SslKeyStoreData;
 
 public class Netty3Server {
 

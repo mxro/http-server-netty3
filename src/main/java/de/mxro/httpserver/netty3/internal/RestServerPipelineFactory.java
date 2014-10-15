@@ -10,7 +10,6 @@ import static org.jboss.netty.channel.Channels.pipeline;
 import javax.net.ssl.SSLEngine;
 
 import mx.sslutils.MxSslUtils;
-import mx.sslutils.SslKeyStoreData;
 
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -21,6 +20,7 @@ import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 import org.jboss.netty.handler.ssl.SslHandler;
 
 import de.mxro.httpserver.netty3.ByteStreamHandler;
+import de.mxro.sslutils.SslKeyStoreData;
 
 /**
  * 

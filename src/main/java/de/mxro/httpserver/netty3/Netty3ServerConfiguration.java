@@ -1,7 +1,7 @@
 package de.mxro.httpserver.netty3;
 
-import mx.sslutils.SslKeyStoreData;
 import de.mxro.httpserver.HttpService;
+import de.mxro.sslutils.SslKeyStoreData;
 
 public abstract class Netty3ServerConfiguration {
 
