@@ -16,7 +16,7 @@ class TestThatShutdownServerWorks {
 
 		val server = AsyncJre.waitFor(
 			[ cb |
-				Netty3Server.start(Services.echoService(), 12322, cb)
+				Netty3Server.start(Services.echo(), 12322, cb)
 			])
 
 		AsyncJre.waitFor(

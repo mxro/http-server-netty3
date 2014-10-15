@@ -1,6 +1,6 @@
 package de.mxro.httpserver.netty3.examples.post
 
-import de.mxro.async.callbacks.ValueCallback
+import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
 
@@ -8,18 +8,13 @@ class StartPostServer {
 
 	def void main(String[] args) {
 		
-		
-		Netty3Server.start(Services.echoService(), 8080, new ValueCallback() {
+		AsyncJre.waitFor([cb |
+			Netty3Server.start(Services.echo(), 8080, cb)
 			
-			override onSuccess(Object value) {
-				
-			}
-			
-			override onFailure(Throwable t) {
-				
-			}
-			
-		});
+			])
+		 
+		 
+		 
 		
 	}
 

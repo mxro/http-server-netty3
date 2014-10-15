@@ -1,13 +1,25 @@
 package de.mxro.httpserver.netty3.examples.post;
 
+import de.mxro.async.Deferred;
+import de.mxro.async.callbacks.ValueCallback;
+import de.mxro.async.jre.AsyncJre;
+import de.mxro.httpserver.HttpService;
+import de.mxro.httpserver.netty3.Netty3Server;
+import de.mxro.httpserver.netty3.Netty3ServerComponent;
+import de.mxro.httpserver.services.Services;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 
 @SuppressWarnings("all")
 public class StartPostServer {
   public void main(final String[] args) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nType mismatch: cannot convert from new ValueCallback(){} to ValueCallback<Netty3ServerComponent>");
+    final Deferred<Netty3ServerComponent> _function = new Deferred<Netty3ServerComponent>() {
+      public void get(final ValueCallback<Netty3ServerComponent> cb) {
+        HttpService _echo = Services.echo();
+        Netty3Server.start(_echo, 8080, cb);
+      }
+    };
+    AsyncJre.<Netty3ServerComponent>waitFor(_function);
   }
   
   private final static String PAGE = new Function0<String>() {
