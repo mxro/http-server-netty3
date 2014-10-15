@@ -49,8 +49,9 @@ public final class RestServerPipelineFactory implements ChannelPipelineFactory {
 
         pipeline.addLast("decoder", new HttpRequestDecoder());
         pipeline.addLast("encoder", new HttpResponseEncoder());
-        HttpContentCompressor httpContentCompressor = new HttpContentCompressor();
-        pipeline.addLast("deflater", httpContentCompressor);
+        final HttpContentCompressor compressor = new CustomHttpContentCompressor();
+
+        pipeline.addLast("deflater", compressor);
         pipeline.addLast("aggregator", new HttpChunkAggregator(5242880));
         pipeline.addLast("httphandler", new HttpRequestAggregator(handler));
 
