@@ -31,7 +31,7 @@ public class HttpUtils {
             response.headers().add(CONTENT_TYPE, "text/plain");
 
             final ChannelFuture future = event.getChannel().write(response);
-            future.addListener(ChannelFutureListener.CLOSE);
+            // future.addListener(ChannelFutureListener.CLOSE);
         } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
