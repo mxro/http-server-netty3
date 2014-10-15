@@ -50,16 +50,14 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
         }
         final ByteArrayOutputStream receivedData = new ByteArrayOutputStream();
         final ChannelBuffer buffer = request.getContent();
-        // buffer.re
+
         if (buffer.readable()) {
             final byte[] ar = new byte[buffer.readableBytes()];
             buffer.readBytes(ar);
             receivedData.write(ar);
-            System.out.println("proecess " + receivedData);
             byteStreamHandler.processRequest(receivedData, e);
             return;
         } else {
-            System.out.println("foun dnon readable request: " + request.getUri());
             byteStreamHandler.processRequest(new ByteArrayOutputStream(), e);
             return;
         }
