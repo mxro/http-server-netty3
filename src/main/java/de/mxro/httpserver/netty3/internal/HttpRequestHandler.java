@@ -39,6 +39,12 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
     }
 
     @Override
+    public void channelClosed(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
+        System.out.println("closed!");
+        super.channelClosed(ctx, e);
+    }
+
+    @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
         System.out.println("msg processed");
         e.getChannel().getConfig().setConnectTimeoutMillis(5000);
