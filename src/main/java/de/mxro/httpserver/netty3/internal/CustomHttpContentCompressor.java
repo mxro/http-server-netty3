@@ -24,7 +24,7 @@ public class CustomHttpContentCompressor extends HttpContentCompressor {
             final HttpMessage httpMessage = (HttpMessage) e.getMessage();
             final int length = httpMessage.getContent().readableBytes();
 
-            httpMessage.headers().add(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(100));
+            httpMessage.headers().add(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(length));
             System.out.println("add length " + length);
         }
 
