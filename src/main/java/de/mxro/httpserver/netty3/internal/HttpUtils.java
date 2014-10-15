@@ -62,8 +62,8 @@ public class HttpUtils {
         // response.headers().add("Version", "HTTP/1.1");
 
         final ChannelFuture future = event.getChannel().write(response);
-        // future.addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
-        future.addListener(ChannelFutureListener.CLOSE);
+        future.addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+        // future.addListener(ChannelFutureListener.CLOSE);
 
     }
 
