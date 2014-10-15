@@ -13,7 +13,6 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.channel.socket.SocketChannelConfig;
-import org.jboss.netty.handler.codec.http.HttpChunk;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
 import de.mxro.httpserver.netty3.ByteStreamHandler;
@@ -26,9 +25,6 @@ import de.mxro.httpserver.netty3.ByteStreamHandler;
 public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
 
     protected final ByteStreamHandler byteStreamHandler;
-
-    private final ByteArrayOutputStream receivedData;
-    private final boolean chunked;
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
@@ -46,35 +42,17 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
 
         }
 
-        if (!chunked) {
-            final HttpRequest request = (HttpRequest) e.getMessage();
+        final HttpRequest request = (HttpRequest) e.getMessage();
 
-            if (request.isChunked()) {
-                HttpUtils.sendHttpError(e, this.getClass().getName() + ": Cannot process chunked requests.");
-                return;
-            }
-
-            final ChannelBuffer buffer = request.getContent();
-            receivedData.write(buffer.array());
-
-            if (!request.isChunked()) {
-                byteStreamHandler.processRequest(receivedData, e);
-            } else {
-
-                // System.out.println("received chunked request!!");
-                // chunked = true;
-
-            }
-
-        } else {
-            final HttpChunk chunk = (HttpChunk) e.getMessage();
-            final ChannelBuffer buffer = chunk.getContent();
-            receivedData.write(buffer.array());
-
-            if (chunk.isLast()) {
-                byteStreamHandler.processRequest(receivedData, e);
-            }
+        if (request.isChunked()) {
+            HttpUtils.sendHttpError(e, this.getClass().getName() + ": Cannot process chunked requests.");
+            return;
         }
+        final ByteArrayOutputStream receivedData = new ByteArrayOutputStream();
+        final ChannelBuffer buffer = request.getContent();
+        receivedData.write(buffer.array());
+
+        byteStreamHandler.processRequest(receivedData, e);
 
     }
 
@@ -82,8 +60,6 @@ public class HttpRequestAggregator extends SimpleChannelUpstreamHandler {
         super();
         this.byteStreamHandler = byteStreamHandler;
 
-        this.chunked = false;
-        this.receivedData = new ByteArrayOutputStream();
     }
 
 }
