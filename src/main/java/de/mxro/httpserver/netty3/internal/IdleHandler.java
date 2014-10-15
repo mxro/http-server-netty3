@@ -9,6 +9,7 @@ public class IdleHandler extends IdleStateAwareChannelHandler {
     @Override
     public void channelIdle(final ChannelHandlerContext ctx, final IdleStateEvent e) {
         if (e.getState() == IdleState.READER_IDLE) {
+            ctx.close();
             e.getChannel().close();
         } else if (e.getState() == IdleState.WRITER_IDLE) {
             e.getChannel().write("dummy");
