@@ -6,6 +6,8 @@ import org.eclipse.xtext.xbase.lib.Functions.Function0;
 @SuppressWarnings("all")
 public class StartPostServer {
   public void main(final String[] args) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nType mismatch: cannot convert from new ValueCallback(){} to ValueCallback<Netty3ServerComponent>");
   }
   
   private final static String PAGE = new Function0<String>() {
@@ -30,7 +32,10 @@ public class StartPostServer {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t\t ");
-      _builder.append("$.ajax({type: \"POST\",");
+      _builder.append("$.ajax({");
+      _builder.newLine();
+      _builder.append("\t\t \t        ");
+      _builder.append("type: \"POST\",");
       _builder.newLine();
       _builder.append("                    ");
       _builder.append("url: \"/service\",");
@@ -63,7 +68,7 @@ public class StartPostServer {
       _builder.newLine();
       _builder.append("                    ");
       _builder.newLine();
-      _builder.append("                   ");
+      _builder.append("                ");
       _builder.append("});");
       _builder.newLine();
       _builder.append("\t");
