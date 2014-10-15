@@ -22,7 +22,7 @@ import org.jboss.netty.handler.codec.http.HttpRequest;
  */
 public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
-    protected final SocketWrapper byteStreamHandler;
+    protected final ByteStreamHandler byteStreamHandler;
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
@@ -31,27 +31,20 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     @Override
     public void channelConnected(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
-        System.out.println("connected!");
+        // System.out.println("connected!");
         super.channelConnected(ctx, e);
     }
 
     @Override
     public void channelClosed(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
-        System.out.println("closed!");
+        // System.out.println("closed!");
         super.channelClosed(ctx, e);
     }
 
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
-        System.out.println("msg processed");
+        // System.out.println("msg processed");
         e.getChannel().getConfig().setConnectTimeoutMillis(3000);
-
-        // if (e.getChannel().getConfig() instanceof SocketChannelConfig) {
-        // final SocketChannelConfig config = (SocketChannelConfig)
-        // e.getChannel().getConfig();
-        // config.setKeepAlive(true);
-
-        // }
 
         final HttpRequest request = (HttpRequest) e.getMessage();
 
@@ -75,7 +68,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     }
 
-    public HttpRequestHandler(final SocketWrapper byteStreamHandler) {
+    public HttpRequestHandler(final ByteStreamHandler byteStreamHandler) {
         super();
         this.byteStreamHandler = byteStreamHandler;
 
