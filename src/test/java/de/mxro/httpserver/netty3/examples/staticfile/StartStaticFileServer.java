@@ -23,22 +23,36 @@ public class StartStaticFileServer {
       ResourceProvider _forWeb = Resources.forWeb(_fromClasspath);
       final ResourceProvider source = Resources.cache(_forWeb);
       final HttpService service = Services.resources(source);
-      final Deferred<Netty3ServerComponent> _function = new Deferred<Netty3ServerComponent>() {
+      final Deferred<Success> _function = new Deferred<Success>() {
+        public void get(final ValueCallback<Success> cb) {
+          SimpleCallback _wrap = Async.wrap(cb);
+          service.start(_wrap);
+        }
+      };
+      AsyncJre.<Success>waitFor(_function);
+      final Deferred<Netty3ServerComponent> _function_1 = new Deferred<Netty3ServerComponent>() {
         public void get(final ValueCallback<Netty3ServerComponent> cb) {
           Netty3Server.start(service, 8081, cb);
         }
       };
-      final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function);
+      final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function_1);
       InputOutput.<String>println("Download file from at http://localhost:8081/bigfile.js");
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
-      final Deferred<Success> _function_1 = new Deferred<Success>() {
+      final Deferred<Success> _function_2 = new Deferred<Success>() {
         public void get(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = Async.wrap(cb);
           server.stop(_wrap);
         }
       };
-      AsyncJre.<Success>waitFor(_function_1);
+      AsyncJre.<Success>waitFor(_function_2);
+      final Deferred<Success> _function_3 = new Deferred<Success>() {
+        public void get(final ValueCallback<Success> cb) {
+          SimpleCallback _wrap = Async.wrap(cb);
+          service.stop(_wrap);
+        }
+      };
+      AsyncJre.<Success>waitFor(_function_3);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
