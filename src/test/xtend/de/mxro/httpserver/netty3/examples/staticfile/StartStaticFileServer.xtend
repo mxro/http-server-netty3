@@ -12,7 +12,6 @@ class StartStaticFileServer {
 		val source = Resources.cache(Resources.forWeb(Resources.fromClasspath(StartStaticFileServer)));
 		
 		val service = Services.resources(source)
-		
 
 		val server = AsyncJre.waitFor([cb | Netty3Server.start(service, 8081, cb) ])
 		 
