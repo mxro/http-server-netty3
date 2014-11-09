@@ -130,6 +130,12 @@ public final class BytesHandler {
             public Address getSourceAddress() {
                 return address;
             }
+
+            @Override
+            public String toString() {
+
+            }
+
         }, response, new Closure<SuccessFail>() {
 
             @Override
