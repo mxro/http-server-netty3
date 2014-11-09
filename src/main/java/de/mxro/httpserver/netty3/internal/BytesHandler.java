@@ -133,7 +133,7 @@ public final class BytesHandler {
 
             @Override
             public String toString() {
-
+                return this + " requestUri " + getRequestUri() + " sourceAddress: " + getSourceAddress();
             }
 
         }, response, new Closure<SuccessFail>() {
