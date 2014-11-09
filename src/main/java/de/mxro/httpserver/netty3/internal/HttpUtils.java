@@ -30,8 +30,7 @@ public class HttpUtils {
             response.setContent(buffer);
             response.headers().add(CONTENT_TYPE, "text/plain");
 
-            final ChannelFuture future = event.getChannel().write(response);
-            // future.addListener(ChannelFutureListener.CLOSE);
+            event.getChannel().write(response);
         } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +56,13 @@ public class HttpUtils {
 
         response.headers().add(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
 
-        final int length = response.getContent().readableBytes();
+        final int length;
+        if (!(responseCode == 304)) {
+            length = response.getContent().readableBytes();
+        } else {
+            length = 0;
+        }
+
         response.headers().add(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(length));
 
         final ChannelFuture future = event.getChannel().write(response);
