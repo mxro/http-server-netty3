@@ -1,8 +1,8 @@
 package de.mxro.httpserver.netty3.tests;
 
-import de.mxro.async.Deferred;
 import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.async.jre.AsyncJre;
+import de.mxro.async.promise.Deferred;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
