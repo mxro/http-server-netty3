@@ -4,7 +4,7 @@ import de.mxro.async.AsyncCommon;
 import de.mxro.async.Operation;
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.async.callbacks.ValueCallback;
-import de.mxro.async.jre.AsyncJre;
+import de.mxro.async.jre.Async;
 import de.mxro.fn.Success;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
@@ -29,13 +29,13 @@ public class StartStaticFileServer {
           service.start(_wrap);
         }
       };
-      AsyncJre.<Success>waitFor(_function);
+      Async.<Success>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           Netty3Server.start(service, 8081, cb);
         }
       };
-      final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function_1);
+      final Netty3ServerComponent server = Async.<Netty3ServerComponent>waitFor(_function_1);
       InputOutput.<String>println("Download file from at http://localhost:8081/bigfile.js");
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
@@ -45,14 +45,14 @@ public class StartStaticFileServer {
           server.stop(_wrap);
         }
       };
-      AsyncJre.<Success>waitFor(_function_2);
+      Async.<Success>waitFor(_function_2);
       final Operation<Success> _function_3 = new Operation<Success>() {
         public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = AsyncCommon.wrap(cb);
           service.stop(_wrap);
         }
       };
-      AsyncJre.<Success>waitFor(_function_3);
+      Async.<Success>waitFor(_function_3);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

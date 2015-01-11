@@ -4,7 +4,7 @@ import de.mxro.async.AsyncCommon;
 import de.mxro.async.Operation;
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.async.callbacks.ValueCallback;
-import de.mxro.async.jre.AsyncJre;
+import de.mxro.async.jre.Async;
 import de.mxro.fn.Success;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
@@ -32,7 +32,7 @@ public class StartPostServer {
           Netty3Server.start(_dispatcher, 8081, cb);
         }
       };
-      final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function);
+      final Netty3ServerComponent server = Async.<Netty3ServerComponent>waitFor(_function);
       InputOutput.<String>println("Open page at http://localhost:8081");
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
@@ -42,7 +42,7 @@ public class StartPostServer {
           server.stop(_wrap);
         }
       };
-      AsyncJre.<Success>waitFor(_function_1);
+      Async.<Success>waitFor(_function_1);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

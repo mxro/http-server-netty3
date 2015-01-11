@@ -1,10 +1,10 @@
 package de.mxro.httpserver.netty3.examples.post
 
-import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
 import java.util.HashMap
 import de.mxro.async.AsyncCommon
+import de.mxro.async.jre.Async
 
 class StartPostServer {
 
@@ -15,8 +15,7 @@ class StartPostServer {
 		services.put("/service", Services.echo)
 		services.put("*", Services.data(PAGE.bytes, "text/html"))
 
-		
-		val server = AsyncJre.waitFor([cb |
+		val server = Async.waitFor([cb |
 			Netty3Server.start(Services.dispatcher(services), 8081, cb)
 		
 			])
@@ -25,7 +24,7 @@ class StartPostServer {
 		 println('Press key to stop server')
 		 System.in.read
 		
-		AsyncJre.waitFor([cb | server.stop(AsyncCommon.wrap(cb))]);
+		Async.waitFor([cb | server.stop(AsyncCommon.wrap(cb))]);
 		
 	}
 

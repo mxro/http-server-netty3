@@ -1,6 +1,5 @@
 package de.mxro.httpserver.netty3.tests
 
-import de.mxro.async.jre.AsyncJre
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
 import java.io.InputStream
@@ -8,17 +7,18 @@ import java.net.URL
 import java.util.Scanner
 import org.junit.Assert
 import org.junit.Test
+import de.mxro.async.jre.Async
 
 class TestThatShutdownServerWorks {
 
 	@Test
 	def void test() {
-		val server = AsyncJre.waitFor(
+		val server = Async.Async.waitFor(
 			[ cb |
 				Netty3Server.start(Services.echo(), 12322, cb)
 			])
 
-		AsyncJre.waitFor(
+		Async.Async.waitFor(
 			[ cb |
 				Netty3Server.startShutdownServer(12321, "mysecret", server, cb)
 			])
