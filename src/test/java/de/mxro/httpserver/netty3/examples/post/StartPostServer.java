@@ -1,6 +1,6 @@
 package de.mxro.httpserver.netty3.examples.post;
 
-import de.mxro.async.Async;
+import de.mxro.async.AsyncCommon;
 import de.mxro.async.Operation;
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.async.callbacks.ValueCallback;
@@ -38,7 +38,7 @@ public class StartPostServer {
       System.in.read();
       final Operation<Success> _function_1 = new Operation<Success>() {
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = Async.wrap(cb);
+          SimpleCallback _wrap = AsyncCommon.wrap(cb);
           server.stop(_wrap);
         }
       };

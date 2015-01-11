@@ -1,6 +1,6 @@
 package de.mxro.httpserver.netty3.examples.staticfile;
 
-import de.mxro.async.Async;
+import de.mxro.async.AsyncCommon;
 import de.mxro.async.Operation;
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.async.callbacks.ValueCallback;
@@ -25,7 +25,7 @@ public class StartStaticFileServer {
       final HttpService service = Services.resources(source);
       final Operation<Success> _function = new Operation<Success>() {
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = Async.wrap(cb);
+          SimpleCallback _wrap = AsyncCommon.wrap(cb);
           service.start(_wrap);
         }
       };
@@ -41,14 +41,14 @@ public class StartStaticFileServer {
       System.in.read();
       final Operation<Success> _function_2 = new Operation<Success>() {
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = Async.wrap(cb);
+          SimpleCallback _wrap = AsyncCommon.wrap(cb);
           server.stop(_wrap);
         }
       };
       AsyncJre.<Success>waitFor(_function_2);
       final Operation<Success> _function_3 = new Operation<Success>() {
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = Async.wrap(cb);
+          SimpleCallback _wrap = AsyncCommon.wrap(cb);
           service.stop(_wrap);
         }
       };
