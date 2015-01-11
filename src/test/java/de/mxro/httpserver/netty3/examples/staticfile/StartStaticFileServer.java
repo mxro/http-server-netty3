@@ -24,14 +24,14 @@ public class StartStaticFileServer {
       final ResourceProvider source = Resources.cache(_forWeb);
       final HttpService service = Services.resources(source);
       final Deferred<Success> _function = new Deferred<Success>() {
-        public void get(final ValueCallback<Success> cb) {
+        public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = Async.wrap(cb);
           service.start(_wrap);
         }
       };
       AsyncJre.<Success>waitFor(_function);
       final Deferred<Netty3ServerComponent> _function_1 = new Deferred<Netty3ServerComponent>() {
-        public void get(final ValueCallback<Netty3ServerComponent> cb) {
+        public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           Netty3Server.start(service, 8081, cb);
         }
       };
@@ -40,14 +40,14 @@ public class StartStaticFileServer {
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
       final Deferred<Success> _function_2 = new Deferred<Success>() {
-        public void get(final ValueCallback<Success> cb) {
+        public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = Async.wrap(cb);
           server.stop(_wrap);
         }
       };
       AsyncJre.<Success>waitFor(_function_2);
       final Deferred<Success> _function_3 = new Deferred<Success>() {
-        public void get(final ValueCallback<Success> cb) {
+        public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = Async.wrap(cb);
           service.stop(_wrap);
         }

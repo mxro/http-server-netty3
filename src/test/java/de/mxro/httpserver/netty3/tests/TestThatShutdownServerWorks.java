@@ -21,14 +21,14 @@ public class TestThatShutdownServerWorks {
   public void test() {
     try {
       final Deferred<Netty3ServerComponent> _function = new Deferred<Netty3ServerComponent>() {
-        public void get(final ValueCallback<Netty3ServerComponent> cb) {
+        public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           HttpService _echo = Services.echo();
           Netty3Server.start(_echo, 12322, cb);
         }
       };
       final Netty3ServerComponent server = AsyncJre.<Netty3ServerComponent>waitFor(_function);
       final Deferred<Netty3ServerComponent> _function_1 = new Deferred<Netty3ServerComponent>() {
-        public void get(final ValueCallback<Netty3ServerComponent> cb) {
+        public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           Netty3Server.startShutdownServer(12321, "mysecret", server, cb);
         }
       };
