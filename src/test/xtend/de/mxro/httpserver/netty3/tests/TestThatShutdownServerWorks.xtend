@@ -13,12 +13,12 @@ class TestThatShutdownServerWorks {
 
 	@Test
 	def void test() {
-		val server = Async.Async.waitFor(
+		val server = Async.waitFor(
 			[ cb |
 				Netty3Server.start(Services.echo(), 12322, cb)
 			])
 
-		Async.Async.waitFor(
+		Async.waitFor(
 			[ cb |
 				Netty3Server.startShutdownServer(12321, "mysecret", server, cb)
 			])
