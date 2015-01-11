@@ -15,6 +15,7 @@ class StartStaticFileServer {
 
 		AsyncJre.waitFor([cb | service.start(Async.wrap(cb))])
 
+
 		val server = AsyncJre.waitFor([cb | Netty3Server.start(service, 8081, cb) ])
 		 
 		 println("Download file from at http://localhost:8081/bigfile.js")

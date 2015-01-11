@@ -18,7 +18,7 @@ class StartPostServer {
 		
 		val server = AsyncJre.waitFor([cb |
 			Netty3Server.start(Services.dispatcher(services), 8081, cb)
-			
+		
 			])
 		 
 		 println("Open page at http://localhost:8081")
