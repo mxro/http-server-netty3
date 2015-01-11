@@ -1,10 +1,10 @@
 package de.mxro.httpserver.netty3.examples.staticfile;
 
 import de.mxro.async.Async;
+import de.mxro.async.Deferred;
 import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.async.jre.AsyncJre;
-import de.mxro.async.promise.Deferred;
 import de.mxro.fn.Success;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
