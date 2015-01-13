@@ -99,10 +99,6 @@
 
 
 
-
-			<!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
-			<!-- For GWT -->
-			<!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
@@ -129,8 +125,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 
 			<!-- Cleanup necessary because of PDE tweaks, clear the project directory -->
 			<plugin>
