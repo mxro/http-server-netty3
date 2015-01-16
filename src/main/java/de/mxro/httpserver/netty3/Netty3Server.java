@@ -99,8 +99,6 @@ public class Netty3Server {
         // Bind and start to accept incoming connections.
         final Channel server = bootstrap.bind(new InetSocketAddress(conf.port()));
 
-        System.out.println("start netty server");
-
         callback.onSuccess(new Netty3ServerComponentImpl(server, conf.port(), bootstrap, timer));
 
     }
