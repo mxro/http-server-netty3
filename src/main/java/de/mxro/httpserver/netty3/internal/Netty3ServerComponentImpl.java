@@ -36,7 +36,7 @@ public class Netty3ServerComponentImpl implements Netty3ServerComponent {
     public void stop(final SimpleCallback callback) {
         try {
             destroy(callback);
-            System.out.println("stooped netty server.");
+
         } catch (final Throwable t) {
             callback.onFailure(t);
         }
