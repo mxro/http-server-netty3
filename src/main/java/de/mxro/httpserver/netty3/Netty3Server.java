@@ -17,9 +17,9 @@ import org.jboss.netty.util.Timer;
 import de.mxro.async.Value;
 import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.httpserver.HttpService;
-import de.mxro.httpserver.netty3.internal.InternalNettyRestServer;
-import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.netty3.internal.BytesHandler;
+import de.mxro.httpserver.netty3.internal.Netty3ServerComponentImpl;
+import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
 import de.mxro.sslutils.SslKeyStoreData;
@@ -99,7 +99,9 @@ public class Netty3Server {
         // Bind and start to accept incoming connections.
         final Channel server = bootstrap.bind(new InetSocketAddress(conf.port()));
 
-        callback.onSuccess(new InternalNettyRestServer(server, conf.port(), bootstrap, timer));
+        System.out.println("start netty server");
+
+        callback.onSuccess(new Netty3ServerComponentImpl(server, conf.port(), bootstrap, timer));
 
     }
 

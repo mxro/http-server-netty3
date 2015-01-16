@@ -14,7 +14,7 @@ import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ComponentConfiguration;
 import de.mxro.server.ComponentContext;
 
-public class InternalNettyRestServer implements Netty3ServerComponent {
+public class Netty3ServerComponentImpl implements Netty3ServerComponent {
 
     protected final Channel channel;
     protected final int port;
@@ -36,13 +36,14 @@ public class InternalNettyRestServer implements Netty3ServerComponent {
     public void stop(final SimpleCallback callback) {
         try {
             destroy(callback);
+            System.out.println("stooped netty server.");
         } catch (final Throwable t) {
             callback.onFailure(t);
         }
 
     }
 
-    public InternalNettyRestServer(final Channel channel, final int port, final ServerBootstrap bootstrap,
+    public Netty3ServerComponentImpl(final Channel channel, final int port, final ServerBootstrap bootstrap,
             final Timer timer) {
         super();
         this.channel = channel;
