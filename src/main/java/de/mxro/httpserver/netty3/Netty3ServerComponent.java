@@ -7,8 +7,8 @@ package de.mxro.httpserver.netty3;
 
 import org.jboss.netty.channel.Channel;
 
-import de.mxro.async.callbacks.SimpleCallback;
 import de.mxro.server.ServerComponent;
+import delight.async.callbacks.SimpleCallback;
 
 public interface Netty3ServerComponent extends ServerComponent {
 

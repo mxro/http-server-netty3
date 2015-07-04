@@ -14,8 +14,6 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.util.HashedWheelTimer;
 import org.jboss.netty.util.Timer;
 
-import de.mxro.async.Value;
-import de.mxro.async.callbacks.ValueCallback;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.internal.BytesHandler;
 import de.mxro.httpserver.netty3.internal.Netty3ServerComponentImpl;
@@ -23,6 +21,8 @@ import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
 import de.mxro.sslutils.SslKeyStoreData;
+import delight.async.Value;
+import delight.async.callbacks.ValueCallback;
 
 public class Netty3Server {
 
