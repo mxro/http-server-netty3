@@ -2,9 +2,9 @@ package de.mxro.httpserver.netty3.examples.post
 
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.services.Services
+import delight.async.AsyncCommon
+import delight.async.jre.Async
 import java.util.HashMap
-import de.mxro.async.AsyncCommon
-import de.mxro.async.jre.Async
 
 class StartPostServer {
 

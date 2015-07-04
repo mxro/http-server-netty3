@@ -3,8 +3,8 @@ package de.mxro.httpserver.netty3.examples.staticfile
 import de.mxro.httpserver.netty3.Netty3Server
 import de.mxro.httpserver.resources.Resources
 import de.mxro.httpserver.services.Services
-import de.mxro.async.AsyncCommon
-import de.mxro.async.jre.Async
+import delight.async.AsyncCommon
+import delight.async.jre.Async
 
 class StartStaticFileServer {
 	def static void main(String[] args) {
