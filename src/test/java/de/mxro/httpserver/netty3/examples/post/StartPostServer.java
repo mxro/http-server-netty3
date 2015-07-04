@@ -27,6 +27,7 @@ public class StartPostServer {
       HttpService _data = Services.data(_bytes, "text/html");
       services.put("*", _data);
       final Operation<Netty3ServerComponent> _function = new Operation<Netty3ServerComponent>() {
+        @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           HttpService _dispatcher = Services.dispatcher(services);
           Netty3Server.start(_dispatcher, 8081, cb);
@@ -37,6 +38,7 @@ public class StartPostServer {
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
       final Operation<Success> _function_1 = new Operation<Success>() {
+        @Override
         public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = AsyncCommon.wrap(cb);
           server.stop(_wrap);

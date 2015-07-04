@@ -21,6 +21,7 @@ public class TestThatShutdownServerWorks {
   public void test() {
     try {
       final Operation<Netty3ServerComponent> _function = new Operation<Netty3ServerComponent>() {
+        @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           HttpService _echo = Services.echo();
           Netty3Server.start(_echo, 12322, cb);
@@ -28,6 +29,7 @@ public class TestThatShutdownServerWorks {
       };
       final Netty3ServerComponent server = Async.<Netty3ServerComponent>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
+        @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           Netty3Server.startShutdownServer(12321, "mysecret", server, cb);
         }

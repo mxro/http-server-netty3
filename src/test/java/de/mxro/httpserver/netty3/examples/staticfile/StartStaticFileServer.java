@@ -24,6 +24,7 @@ public class StartStaticFileServer {
       final ResourceProvider source = Resources.cache(_forWeb);
       final HttpService service = Services.resources(source);
       final Operation<Success> _function = new Operation<Success>() {
+        @Override
         public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = AsyncCommon.wrap(cb);
           service.start(_wrap);
@@ -31,6 +32,7 @@ public class StartStaticFileServer {
       };
       Async.<Success>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
+        @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
           Netty3Server.start(service, 8081, cb);
         }
@@ -40,6 +42,7 @@ public class StartStaticFileServer {
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
       final Operation<Success> _function_2 = new Operation<Success>() {
+        @Override
         public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = AsyncCommon.wrap(cb);
           server.stop(_wrap);
@@ -47,6 +50,7 @@ public class StartStaticFileServer {
       };
       Async.<Success>waitFor(_function_2);
       final Operation<Success> _function_3 = new Operation<Success>() {
+        @Override
         public void apply(final ValueCallback<Success> cb) {
           SimpleCallback _wrap = AsyncCommon.wrap(cb);
           service.stop(_wrap);
