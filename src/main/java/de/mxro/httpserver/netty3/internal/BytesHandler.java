@@ -1,5 +1,8 @@
 package de.mxro.httpserver.netty3.internal;
 
+import delight.functional.Closure;
+import delight.functional.SuccessFail;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.Inet4Address;
@@ -20,8 +23,6 @@ import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.IPVersion;
 import de.mxro.httpserver.Request;
 import de.mxro.httpserver.Response;
-import delight.functional.Closure;
-import delight.functional.SuccessFail;
 
 public final class BytesHandler {
 

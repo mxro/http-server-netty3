@@ -1,5 +1,9 @@
 package de.mxro.httpserver.netty3.tests;
 
+import delight.async.Operation;
+import delight.async.callbacks.ValueCallback;
+import delight.async.jre.Async;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -13,9 +17,6 @@ import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.services.Services;
-import delight.async.Operation;
-import delight.async.callbacks.ValueCallback;
-import delight.async.jre.Async;
 
 @SuppressWarnings("all")
 public class TestThatShutdownServerWorks {

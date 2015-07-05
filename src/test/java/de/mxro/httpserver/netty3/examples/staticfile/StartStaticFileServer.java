@@ -1,5 +1,12 @@
 package de.mxro.httpserver.netty3.examples.staticfile;
 
+import delight.async.AsyncCommon;
+import delight.async.Operation;
+import delight.async.callbacks.SimpleCallback;
+import delight.async.callbacks.ValueCallback;
+import delight.async.jre.Async;
+import delight.functional.Success;
+
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
@@ -9,12 +16,6 @@ import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.resources.ResourceProvider;
 import de.mxro.httpserver.resources.Resources;
 import de.mxro.httpserver.services.Services;
-import delight.async.AsyncCommon;
-import delight.async.Operation;
-import delight.async.callbacks.SimpleCallback;
-import delight.async.callbacks.ValueCallback;
-import delight.async.jre.Async;
-import delight.functional.Success;
 
 @SuppressWarnings("all")
 public class StartStaticFileServer {

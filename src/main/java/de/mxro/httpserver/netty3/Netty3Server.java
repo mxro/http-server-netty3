@@ -5,6 +5,9 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3;
 
+import delight.async.Value;
+import delight.async.callbacks.ValueCallback;
+
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -21,8 +24,6 @@ import de.mxro.httpserver.netty3.internal.RestServerPipelineFactory;
 import de.mxro.httpserver.services.Services;
 import de.mxro.server.ServerComponent;
 import de.mxro.sslutils.SslKeyStoreData;
-import delight.async.Value;
-import delight.async.callbacks.ValueCallback;
 
 public class Netty3Server {
 

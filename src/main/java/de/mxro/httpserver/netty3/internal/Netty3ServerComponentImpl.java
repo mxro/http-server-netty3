@@ -5,6 +5,8 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
+import delight.async.callbacks.SimpleCallback;
+
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.util.Timer;
@@ -12,7 +14,6 @@ import org.jboss.netty.util.Timer;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.server.ComponentConfiguration;
 import de.mxro.server.ComponentContext;
-import delight.async.callbacks.SimpleCallback;
 
 public class Netty3ServerComponentImpl implements Netty3ServerComponent {
 
