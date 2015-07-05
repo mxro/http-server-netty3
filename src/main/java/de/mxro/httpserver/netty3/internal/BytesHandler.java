@@ -13,8 +13,6 @@ import java.util.Map.Entry;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
-import de.mxro.fn.Closure;
-import de.mxro.fn.SuccessFail;
 import de.mxro.httpserver.Address;
 import de.mxro.httpserver.HttpMethod;
 import de.mxro.httpserver.HttpServer;
@@ -22,6 +20,8 @@ import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.IPVersion;
 import de.mxro.httpserver.Request;
 import de.mxro.httpserver.Response;
+import delight.functional.Closure;
+import delight.functional.SuccessFail;
 
 public final class BytesHandler {
 
