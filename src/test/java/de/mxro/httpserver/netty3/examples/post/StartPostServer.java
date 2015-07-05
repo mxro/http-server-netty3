@@ -1,23 +1,20 @@
 package de.mxro.httpserver.netty3.examples.post;
 
+import de.mxro.httpserver.HttpService;
+import de.mxro.httpserver.netty3.Netty3Server;
+import de.mxro.httpserver.netty3.Netty3ServerComponent;
+import de.mxro.httpserver.services.Services;
 import delight.async.AsyncCommon;
 import delight.async.Operation;
 import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
 import delight.functional.Success;
-
 import java.util.HashMap;
-
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-
-import de.mxro.httpserver.HttpService;
-import de.mxro.httpserver.netty3.Netty3Server;
-import de.mxro.httpserver.netty3.Netty3ServerComponent;
-import de.mxro.httpserver.services.Services;
 
 @SuppressWarnings("all")
 public class StartPostServer {
