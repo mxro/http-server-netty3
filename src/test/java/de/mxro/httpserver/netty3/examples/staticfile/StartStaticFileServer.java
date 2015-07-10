@@ -26,8 +26,8 @@ public class StartStaticFileServer {
       final Operation<Success> _function = new Operation<Success>() {
         @Override
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = AsyncCommon.wrap(cb);
-          service.start(_wrap);
+          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+          service.start(_asSimpleCallback);
         }
       };
       Async.<Success>waitFor(_function);
@@ -44,16 +44,16 @@ public class StartStaticFileServer {
       final Operation<Success> _function_2 = new Operation<Success>() {
         @Override
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = AsyncCommon.wrap(cb);
-          server.stop(_wrap);
+          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+          server.stop(_asSimpleCallback);
         }
       };
       Async.<Success>waitFor(_function_2);
       final Operation<Success> _function_3 = new Operation<Success>() {
         @Override
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = AsyncCommon.wrap(cb);
-          service.stop(_wrap);
+          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+          service.stop(_asSimpleCallback);
         }
       };
       Async.<Success>waitFor(_function_3);

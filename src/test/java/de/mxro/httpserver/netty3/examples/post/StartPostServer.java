@@ -40,8 +40,8 @@ public class StartPostServer {
       final Operation<Success> _function_1 = new Operation<Success>() {
         @Override
         public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _wrap = AsyncCommon.wrap(cb);
-          server.stop(_wrap);
+          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+          server.stop(_asSimpleCallback);
         }
       };
       Async.<Success>waitFor(_function_1);

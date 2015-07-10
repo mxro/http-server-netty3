@@ -24,7 +24,7 @@ class StartPostServer {
 		 println('Press key to stop server')
 		 System.in.read
 		
-		Async.waitFor([cb | server.stop(AsyncCommon.wrap(cb))]);
+		Async.waitFor([cb | server.stop(AsyncCommon.asSimpleCallback(cb))]);
 		
 	}
 

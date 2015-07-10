@@ -13,7 +13,7 @@ class StartStaticFileServer {
 		
 		val service = Services.resources(source)
 
-		Async.waitFor([cb | service.start(AsyncCommon.wrap(cb))])
+		Async.waitFor([cb | service.start(AsyncCommon.asSimpleCallback(cb))])
 
 
 		val server = Async.waitFor([cb | Netty3Server.start(service, 8081, cb) ])
@@ -22,8 +22,8 @@ class StartStaticFileServer {
 		 println('Press key to stop server')
 		 System.in.read
 		
-		Async.waitFor([cb | server.stop(AsyncCommon.wrap(cb))]);
+		Async.waitFor([cb | server.stop(AsyncCommon.asSimpleCallback(cb))]);
 		
-		Async.waitFor([cb | service.stop(AsyncCommon.wrap(cb))])
+		Async.waitFor([cb | service.stop(AsyncCommon.asSimpleCallback(cb))])
 	}
 }
