@@ -22,8 +22,8 @@
 	<dependencies>
 
 		<dependency>
-			<artifactId>http-server</artifactId>
-			<groupId>de.mxro.httpserver</groupId>
+			<artifactId>delight-http</artifactId>
+			<groupId>org.javadelight</groupId>
 			<version>0.0.11</version>
 		</dependency>
 
