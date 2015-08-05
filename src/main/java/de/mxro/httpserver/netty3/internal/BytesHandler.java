@@ -44,8 +44,8 @@ public final class BytesHandler {
                 } else if (inetAddress instanceof Inet6Address) {
                     return IPVersion.IPv6;
                 } else {
-                    throw new RuntimeException("SocketWrapper supports only IPv4 and IPv6 addresses and not "
-                            + inetAddress);
+                    throw new RuntimeException(
+                            "SocketWrapper supports only IPv4 and IPv6 addresses and not " + inetAddress);
                 }
 
             }
@@ -98,6 +98,8 @@ public final class BytesHandler {
                     return HttpMethod.PUT;
                 } else if (request.getMethod().equals(org.jboss.netty.handler.codec.http.HttpMethod.DELETE)) {
                     return HttpMethod.DELETE;
+                } else if (request.getMethod().equals(org.jboss.netty.handler.codec.http.HttpMethod.HEAD)) {
+                    return HttpMethod.HEAD;
                 }
                 throw new IllegalStateException("Http method not supported: " + request.getMethod());
 
