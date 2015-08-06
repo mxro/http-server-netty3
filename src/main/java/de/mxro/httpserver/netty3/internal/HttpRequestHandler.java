@@ -24,12 +24,11 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
-        throw new RuntimeException(e.getCause());
+        // throw new RuntimeException(e.getCause());
     }
 
     @Override
     public void channelConnected(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
-        // System.out.println("connected!");
         super.channelConnected(ctx, e);
     }
 
