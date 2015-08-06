@@ -12,6 +12,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
+import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
@@ -21,6 +22,23 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 public class HttpUtils {
 
     public static void sendHttpError(final MessageEvent event, final String message) {
+        final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
+
+        ChannelBuffer buffer;
+        try {
+            buffer = ChannelBuffers.wrappedBuffer(message.getBytes("UTF-8"));
+
+            response.setContent(buffer);
+            response.headers().add(CONTENT_TYPE, "text/plain");
+
+            event.getChannel().write(response);
+        } catch (final UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void sendHttpError(final ExceptionEvent event, final String message) {
         final HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 
         ChannelBuffer buffer;

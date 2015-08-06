@@ -24,7 +24,8 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
-        // throw new RuntimeException(e.getCause());
+        HttpUtils.sendHttpError(e, this.getClass().getName() + ": Cannot process chunked requests.");
+        throw new RuntimeException(e.getCause());
     }
 
     @Override
