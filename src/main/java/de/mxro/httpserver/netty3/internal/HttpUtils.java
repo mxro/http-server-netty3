@@ -33,7 +33,8 @@ public class HttpUtils {
             final int length = response.getContent().readableBytes();
             response.headers().add(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(length));
 
-            event.getChannel().write(response);
+            final ChannelFuture future = event.getChannel().write(response);
+            future.addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
         } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -49,6 +50,8 @@ public class HttpUtils {
 
             response.setContent(buffer);
             response.headers().add(CONTENT_TYPE, "text/plain");
+            final int length = response.getContent().readableBytes();
+            response.headers().add(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(length));
 
             event.getChannel().write(response);
         } catch (final UnsupportedEncodingException e) {
