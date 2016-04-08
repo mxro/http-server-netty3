@@ -45,6 +45,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
                 || cause instanceof javax.net.ssl.SSLException) {
 
             Log.warn("SSL connection cannot be established with client", cause);
+            return;
         }
 
         Log.warn("Error while processing HTTP", e.getCause());
