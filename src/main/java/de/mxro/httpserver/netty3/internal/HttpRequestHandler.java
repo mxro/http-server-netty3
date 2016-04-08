@@ -5,6 +5,8 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
+import delight.simplelog.Log;
+
 import java.io.IOException;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -26,13 +28,13 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
-        
+
         ctx.getChannel().close();
-        
-        if (e instanceof IOException) {
-           if (((IOException) e).getMessage().contains("Connection reset by peer")) {
-               Log.
-           }
+
+        if (e.getCause() instanceof IOException) {
+            if (((IOException) e).getMessage().contains("Connection reset by peer")) {
+                Log.trace("Client disconnected before response was sent.", e.getCause());
+            }
         }
         // HttpUtils.sendHttpError(e,
         // this.getClass().getName() + ": Unexpected exception occured [" +
