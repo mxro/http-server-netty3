@@ -24,6 +24,8 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
+        
+        ctx.getChannel().close()
         // HttpUtils.sendHttpError(e,
         // this.getClass().getName() + ": Unexpected exception occured [" +
         // e.getCause() + "].");
