@@ -32,14 +32,17 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
         ctx.getChannel().close();
 
         if (e.getCause() instanceof IOException) {
-            if (((IOException) e).getMessage().contains("Connection reset by peer")) {
+            if (((IOException) e.getCause()).getMessage().contains("Connection reset by peer")) {
                 Log.trace("Client disconnected before response was sent.", e.getCause());
             }
+            return;
         }
+
+        Log.warn("Error while processing HTTP", e.getCause());
         // HttpUtils.sendHttpError(e,
         // this.getClass().getName() + ": Unexpected exception occured [" +
         // e.getCause() + "].");
-        throw new RuntimeException(e.getCause());
+
     }
 
     @Override
