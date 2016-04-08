@@ -41,6 +41,11 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
             Log.warn("IO Exception while processing message", cause);
             return;
         }
+
+        if (cause instanceof java.nio.channels.ClosedChannelException) {
+            Log.trace("Client disconnected before response was sent.", cause);
+            return;
+        }
         if (cause instanceof javax.net.ssl.SSLHandshakeException || cause instanceof NotSslRecordException
                 || cause instanceof javax.net.ssl.SSLException) {
 
