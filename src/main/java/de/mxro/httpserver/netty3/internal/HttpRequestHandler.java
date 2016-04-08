@@ -31,11 +31,21 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
         ctx.getChannel().close();
 
-        if (e.getCause() instanceof IOException) {
+        final Throwable cause = e.getCause()
+        
+        if (cause instanceof IOException) {
             if (((IOException) e.getCause()).getMessage().contains("Connection reset by peer")) {
                 Log.trace("Client disconnected before response was sent.", e.getCause());
             }
+            Log.warn("IO Exception while processing message", cause);
             return;
+        }
+        if (cause instanceof javax.net.ssl.SSLHandshakeException || 
+                cause instanceof io.netty.handler.ssl.NotSslRecordException ||
+                cause instanceof javax.net.ssl.SSLException
+                ) {
+            
+            
         }
 
         Log.warn("Error while processing HTTP", e.getCause());
