@@ -16,6 +16,7 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.jboss.netty.handler.ssl.NotSslRecordException;
 
 /**
  * 
@@ -31,8 +32,8 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
         ctx.getChannel().close();
 
-        final Throwable cause = e.getCause()
-        
+        final Throwable cause = e.getCause();
+
         if (cause instanceof IOException) {
             if (((IOException) e.getCause()).getMessage().contains("Connection reset by peer")) {
                 Log.trace("Client disconnected before response was sent.", e.getCause());
@@ -40,12 +41,10 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
             Log.warn("IO Exception while processing message", cause);
             return;
         }
-        if (cause instanceof javax.net.ssl.SSLHandshakeException || 
-                cause instanceof io.netty.handler.ssl.NotSslRecordException ||
-                cause instanceof javax.net.ssl.SSLException
-                ) {
-            
-            
+        if (cause instanceof javax.net.ssl.SSLHandshakeException || cause instanceof NotSslRecordException
+                || cause instanceof javax.net.ssl.SSLException) {
+
+            Log.warn("SSL connection cannot be established with client", cause);
         }
 
         Log.warn("Error while processing HTTP", e.getCause());
