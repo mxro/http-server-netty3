@@ -5,6 +5,8 @@
  ******************************************************************************/
 package de.mxro.httpserver.netty3.internal;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -25,7 +27,13 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
         
-        ctx.getChannel().close()
+        ctx.getChannel().close();
+        
+        if (e instanceof IOException) {
+           if (((IOException) e).getMessage().contains("Connection reset by peer")) {
+               Log.
+           }
+        }
         // HttpUtils.sendHttpError(e,
         // this.getClass().getName() + ": Unexpected exception occured [" +
         // e.getCause() + "].");
