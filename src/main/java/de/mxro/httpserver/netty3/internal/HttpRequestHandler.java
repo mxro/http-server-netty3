@@ -35,7 +35,9 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
         final Throwable cause = e.getCause();
 
         if (cause instanceof IOException) {
-            if (((IOException) e.getCause()).getMessage().contains("Connection reset by peer")) {
+
+            final IOException ioException = (IOException) cause;
+            if (ioException.getMessage() != null && ioException.getMessage().contains("Connection reset by peer")) {
                 Log.trace("Client disconnected before response was sent.", e.getCause());
             }
             Log.warn("IO Exception while processing message", cause);
