@@ -28,7 +28,7 @@ public final class BytesHandler {
 
     private final HttpService service;
 
-    public void processRequest(final byte[] receivedData, final MessageEvent e) {
+    public final void processRequest(final byte[] receivedData, final MessageEvent e) {
         final HttpRequest request = (HttpRequest) e.getMessage();
         final Response response = HttpServer.createResponse();
 
