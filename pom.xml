@@ -224,6 +224,7 @@
 									<link>http://modules.appjangle.com/http-server/latest/apidocs/</link>
 									<link>http://modules.appjangle.com/server-api/latest/apidocs/</link>
 								</links>
+								<failOnError>false</failOnError>
 							</configuration>
 						</plugin>
 
