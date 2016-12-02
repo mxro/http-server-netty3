@@ -234,4 +234,40 @@ class TestParallelAccess {
 			)
 		]
 	}
+	
+	@Test
+	def void test_task_timeout() {
+		val serviceMap = new HashMap<String, HttpService>()
+
+		serviceMap.put("/slow", Services.withParallelWorkerThreads("slow", 2, 100, Services.delayedEcho(1000)))
+
+		val service = Services.withParallelWorkerThreads("dispatcher", 2, 100, Services.dispatcher(serviceMap))
+
+		Async.waitFor [ cb |
+			service.start(AsyncCommon.asSimpleCallback(cb))
+		]
+	
+		val server = Async.waitFor(
+			[ cb |
+			Netty3Server.start(
+				service,
+				12728,
+				cb
+			)
+		])
+		
+		Async.waitFor [cb |
+			println(Unirest.post("http://localhost:12728/slow").body("Hello").asString.body)
+			
+			cb.onSuccess(Success.INSTANCE)
+		]
+		
+		
+			
+		Async.waitFor [ cb |
+			server.stop(
+				AsyncCommon.asSimpleCallback(cb)
+			)
+		]
+	}
 }

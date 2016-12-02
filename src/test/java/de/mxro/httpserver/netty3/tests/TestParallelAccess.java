@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.junit.Assert;
@@ -348,5 +349,55 @@ public class TestParallelAccess {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  @Test
+  public void test_task_timeout() {
+    final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
+    HttpService _delayedEcho = Services.delayedEcho(1000);
+    HttpService _withParallelWorkerThreads = Services.withParallelWorkerThreads("slow", 2, 100, _delayedEcho);
+    serviceMap.put("/slow", _withParallelWorkerThreads);
+    HttpService _dispatcher = Services.dispatcher(serviceMap);
+    final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 100, _dispatcher);
+    final Operation<Success> _function = new Operation<Success>() {
+      @Override
+      public void apply(final ValueCallback<Success> cb) {
+        SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        service.start(_asSimpleCallback);
+      }
+    };
+    Async.<Success>waitFor(_function);
+    final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
+      @Override
+      public void apply(final ValueCallback<Netty3ServerComponent> cb) {
+        Netty3Server.start(service, 
+          12728, cb);
+      }
+    };
+    final Netty3ServerComponent server = Async.<Netty3ServerComponent>waitFor(_function_1);
+    final Operation<Success> _function_2 = new Operation<Success>() {
+      @Override
+      public void apply(final ValueCallback<Success> cb) {
+        try {
+          HttpRequestWithBody _post = Unirest.post("http://localhost:12728/slow");
+          RequestBodyEntity _body = _post.body("Hello");
+          HttpResponse<String> _asString = _body.asString();
+          String _body_1 = _asString.getBody();
+          InputOutput.<String>println(_body_1);
+          cb.onSuccess(Success.INSTANCE);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      }
+    };
+    Async.<Success>waitFor(_function_2);
+    final Operation<Success> _function_3 = new Operation<Success>() {
+      @Override
+      public void apply(final ValueCallback<Success> cb) {
+        SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        server.stop(_asSimpleCallback);
+      }
+    };
+    Async.<Success>waitFor(_function_3);
   }
 }
