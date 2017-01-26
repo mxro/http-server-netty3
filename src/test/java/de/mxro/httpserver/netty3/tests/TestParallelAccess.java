@@ -44,14 +44,14 @@ public class TestParallelAccess {
       serviceMap.put("/two", _delayedEcho_1);
       HttpService _dispatcher = Services.dispatcher(serviceMap);
       final HttpService service = Services.withParallelWorkerThreads("test", 10, 230000, _dispatcher);
-      final Operation<Success> _function = new Operation<Success>() {
+      final Operation<Object> _function = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           service.start(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function);
+      Async.<Object>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
         @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
@@ -112,14 +112,14 @@ public class TestParallelAccess {
       final int startLong = order.indexOf("1");
       final int endLong = order.indexOf("7");
       Assert.assertTrue(((endLong - startLong) > 5));
-      final Operation<Success> _function_4 = new Operation<Success>() {
+      final Operation<Object> _function_4 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           server.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_4);
+      Async.<Object>waitFor(_function_4);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -135,14 +135,14 @@ public class TestParallelAccess {
       serviceMap.put("/two", _delayedEcho_1);
       HttpService _dispatcher = Services.dispatcher(serviceMap);
       final HttpService service = Services.withParallelWorkerThreads("test", 2, 230000, _dispatcher);
-      final Operation<Success> _function = new Operation<Success>() {
+      final Operation<Object> _function = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           service.start(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function);
+      Async.<Object>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
         @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
@@ -203,14 +203,14 @@ public class TestParallelAccess {
       final int startLong = order.indexOf("1");
       final int endLong = order.indexOf("7");
       Assert.assertTrue(((endLong - startLong) > 5));
-      final Operation<Success> _function_4 = new Operation<Success>() {
+      final Operation<Object> _function_4 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           server.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_4);
+      Async.<Object>waitFor(_function_4);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -228,14 +228,14 @@ public class TestParallelAccess {
       serviceMap.put("/fast", _withParallelWorkerThreads_1);
       HttpService _dispatcher = Services.dispatcher(serviceMap);
       final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 230000, _dispatcher);
-      final Operation<Success> _function = new Operation<Success>() {
+      final Operation<Object> _function = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           service.start(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function);
+      Async.<Object>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
         @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
@@ -338,14 +338,14 @@ public class TestParallelAccess {
         }
       };
       Async.<Success>waitFor(_function_4);
-      final Operation<Success> _function_5 = new Operation<Success>() {
+      final Operation<Object> _function_5 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           server.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_5);
+      Async.<Object>waitFor(_function_5);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -359,14 +359,14 @@ public class TestParallelAccess {
     serviceMap.put("/slow", _withParallelWorkerThreads);
     HttpService _dispatcher = Services.dispatcher(serviceMap);
     final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 100, _dispatcher);
-    final Operation<Success> _function = new Operation<Success>() {
+    final Operation<Object> _function = new Operation<Object>() {
       @Override
-      public void apply(final ValueCallback<Success> cb) {
-        SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+      public void apply(final ValueCallback<Object> cb) {
+        SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
         service.start(_asSimpleCallback);
       }
     };
-    Async.<Success>waitFor(_function);
+    Async.<Object>waitFor(_function);
     final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
       @Override
       public void apply(final ValueCallback<Netty3ServerComponent> cb) {
@@ -391,13 +391,13 @@ public class TestParallelAccess {
       }
     };
     Async.<Success>waitFor(_function_2);
-    final Operation<Success> _function_3 = new Operation<Success>() {
+    final Operation<Object> _function_3 = new Operation<Object>() {
       @Override
-      public void apply(final ValueCallback<Success> cb) {
-        SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+      public void apply(final ValueCallback<Object> cb) {
+        SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
         server.stop(_asSimpleCallback);
       }
     };
-    Async.<Success>waitFor(_function_3);
+    Async.<Object>waitFor(_function_3);
   }
 }

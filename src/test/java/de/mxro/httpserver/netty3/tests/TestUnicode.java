@@ -14,7 +14,6 @@ import delight.async.Operation;
 import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
-import delight.functional.Success;
 import java.util.HashMap;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.junit.Assert;
@@ -32,14 +31,14 @@ public class TestUnicode {
       serviceMap.put("/two", _jsonService);
       HttpService _dispatcher = Services.dispatcher(serviceMap);
       final HttpService service = Services.withParallelWorkerThreads("test", 10, 230000, _dispatcher);
-      final Operation<Success> _function = new Operation<Success>() {
+      final Operation<Object> _function = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           service.start(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function);
+      Async.<Object>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
         @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
@@ -61,14 +60,14 @@ public class TestUnicode {
       Assert.assertTrue(_contains);
       boolean _contains_1 = json.contains("ä");
       Assert.assertTrue(_contains_1);
-      final Operation<Success> _function_2 = new Operation<Success>() {
+      final Operation<Object> _function_2 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           server.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_2);
+      Async.<Object>waitFor(_function_2);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

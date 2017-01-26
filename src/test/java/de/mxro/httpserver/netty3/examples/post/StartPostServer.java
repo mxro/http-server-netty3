@@ -9,7 +9,6 @@ import delight.async.Operation;
 import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
-import delight.functional.Success;
 import java.util.HashMap;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -37,14 +36,14 @@ public class StartPostServer {
       InputOutput.<String>println("Open page at http://localhost:8081");
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
-      final Operation<Success> _function_1 = new Operation<Success>() {
+      final Operation<Object> _function_1 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           server.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_1);
+      Async.<Object>waitFor(_function_1);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

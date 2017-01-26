@@ -11,7 +11,6 @@ import delight.async.Operation;
 import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
-import delight.functional.Success;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
@@ -23,14 +22,14 @@ public class StartStaticFileServer {
       ResourceProvider _forWeb = Resources.forWeb(_fromClasspath);
       final ResourceProvider source = Resources.cache(_forWeb);
       final HttpService service = Services.resources(source);
-      final Operation<Success> _function = new Operation<Success>() {
+      final Operation<Object> _function = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           service.start(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function);
+      Async.<Object>waitFor(_function);
       final Operation<Netty3ServerComponent> _function_1 = new Operation<Netty3ServerComponent>() {
         @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
@@ -41,22 +40,22 @@ public class StartStaticFileServer {
       InputOutput.<String>println("Download file from at http://localhost:8081/bigfile.js");
       InputOutput.<String>println("Press key to stop server");
       System.in.read();
-      final Operation<Success> _function_2 = new Operation<Success>() {
+      final Operation<Object> _function_2 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           server.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_2);
-      final Operation<Success> _function_3 = new Operation<Success>() {
+      Async.<Object>waitFor(_function_2);
+      final Operation<Object> _function_3 = new Operation<Object>() {
         @Override
-        public void apply(final ValueCallback<Success> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.asSimpleCallback(cb);
+        public void apply(final ValueCallback<Object> cb) {
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
           service.stop(_asSimpleCallback);
         }
       };
-      Async.<Success>waitFor(_function_3);
+      Async.<Object>waitFor(_function_3);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
