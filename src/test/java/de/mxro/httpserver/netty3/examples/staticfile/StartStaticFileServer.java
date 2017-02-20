@@ -8,7 +8,6 @@ import de.mxro.httpserver.resources.Resources;
 import de.mxro.httpserver.services.Services;
 import delight.async.AsyncCommon;
 import delight.async.Operation;
-import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -18,15 +17,12 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 public class StartStaticFileServer {
   public static void main(final String[] args) {
     try {
-      ResourceProvider _fromClasspath = Resources.fromClasspath(StartStaticFileServer.class);
-      ResourceProvider _forWeb = Resources.forWeb(_fromClasspath);
-      final ResourceProvider source = Resources.cache(_forWeb);
+      final ResourceProvider source = Resources.cache(Resources.forWeb(Resources.fromClasspath(StartStaticFileServer.class)));
       final HttpService service = Services.resources(source);
       final Operation<Object> _function = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
-          service.start(_asSimpleCallback);
+          service.start(AsyncCommon.<Object>asSimpleCallback(cb));
         }
       };
       Async.<Object>waitFor(_function);
@@ -43,16 +39,14 @@ public class StartStaticFileServer {
       final Operation<Object> _function_2 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
-          server.stop(_asSimpleCallback);
+          server.stop(AsyncCommon.<Object>asSimpleCallback(cb));
         }
       };
       Async.<Object>waitFor(_function_2);
       final Operation<Object> _function_3 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
-          service.stop(_asSimpleCallback);
+          service.stop(AsyncCommon.<Object>asSimpleCallback(cb));
         }
       };
       Async.<Object>waitFor(_function_3);
