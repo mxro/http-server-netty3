@@ -25,7 +25,6 @@ class StartPostServer {
 		 System.in.read
 		
 		Async.waitFor([cb | server.stop(AsyncCommon.asSimpleCallback(cb))]);
-		
 	}
 
 	static val PAGE = '''

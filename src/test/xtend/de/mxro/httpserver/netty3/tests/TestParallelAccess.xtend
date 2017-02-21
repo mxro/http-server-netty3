@@ -16,6 +16,7 @@ import org.junit.Test
 import delight.functional.Success
 
 class TestParallelAccess {
+	
 	@Test
 	def void test_parallel_possible() {
 
