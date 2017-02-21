@@ -106,7 +106,9 @@ class TestParallelAccess {
 		val t1 = new Thread [
 			for (i : 1 .. 5) {
 				list.add("1")
+				println('call long')
 				Unirest.post("http://localhost:12428/one").body("Hello").asString.body
+				println('long done')
 				list.add("7")
 
 			}
@@ -117,7 +119,9 @@ class TestParallelAccess {
 		val t2 = new Thread [
 			for (i : 1 .. 300) {
 				list.add("6")
+				println('call short')
 				Unirest.post("http://localhost:12428/two").body("Hello").asString.body
+				println('short done')
 				list.add("8")
 			}
 		]

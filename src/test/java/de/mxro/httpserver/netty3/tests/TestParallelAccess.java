@@ -141,7 +141,9 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("1");
+                InputOutput.<String>println("call long");
                 Unirest.post("http://localhost:12428/one").body("Hello").asString().getBody();
+                InputOutput.<String>println("long done");
                 list.add("7");
               }
             }
@@ -160,7 +162,9 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("6");
+                InputOutput.<String>println("call short");
                 Unirest.post("http://localhost:12428/two").body("Hello").asString().getBody();
+                InputOutput.<String>println("short done");
                 list.add("8");
               }
             }
