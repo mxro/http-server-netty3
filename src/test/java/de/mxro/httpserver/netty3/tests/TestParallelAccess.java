@@ -113,7 +113,7 @@ public class TestParallelAccess {
   public void test_queue_overflow() {
     try {
       final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
-      serviceMap.put("/one", Services.delayedEcho(100));
+      serviceMap.put("/one", Services.delayedEcho(500));
       serviceMap.put("/two", Services.delayedEcho(1));
       final HttpService service = Services.withParallelWorkerThreads("test", 2, 230000, Services.dispatcher(serviceMap));
       final Operation<Object> _function = new Operation<Object>() {
@@ -174,6 +174,7 @@ public class TestParallelAccess {
       t1.join();
       t2.join();
       final String order = IterableExtensions.join(list, "");
+      InputOutput.<String>println(order);
       final int startLong = order.indexOf("1");
       final int endLong = order.indexOf("7");
       Assert.assertTrue(((endLong - startLong) > 5));
