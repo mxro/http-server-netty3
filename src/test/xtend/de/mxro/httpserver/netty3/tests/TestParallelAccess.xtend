@@ -8,12 +8,12 @@ import de.mxro.httpserver.services.Services
 import de.mxro.metrics.jre.Metrics
 import delight.async.AsyncCommon
 import delight.async.jre.Async
+import delight.functional.Success
 import java.util.ArrayList
 import java.util.Collections
 import java.util.HashMap
 import org.junit.Assert
 import org.junit.Test
-import delight.functional.Success
 
 class TestParallelAccess {
 	
@@ -84,7 +84,7 @@ class TestParallelAccess {
 	def void test_queue_overflow() {
 		val serviceMap = new HashMap<String, HttpService>()
 
-		serviceMap.put("/one", Services.delayedEcho(1000))
+		serviceMap.put("/one", Services.delayedEcho(100))
 		serviceMap.put("/two", Services.delayedEcho(1))
 
 		val service = Services.withParallelWorkerThreads("test", 2, 230000, Services.dispatcher(serviceMap))
@@ -106,9 +106,9 @@ class TestParallelAccess {
 		val t1 = new Thread [
 			for (i : 1 .. 5) {
 				list.add("1")
-				println('call long')
+				
 				Unirest.post("http://localhost:12428/one").body("Hello").asString.body
-				println('long done')
+				
 				list.add("7")
 
 			}
@@ -119,9 +119,9 @@ class TestParallelAccess {
 		val t2 = new Thread [
 			for (i : 1 .. 300) {
 				list.add("6")
-				println('call short')
+				
 				Unirest.post("http://localhost:12428/two").body("Hello").asString.body
-				println('short done')
+				
 				list.add("8")
 			}
 		]
@@ -133,7 +133,6 @@ class TestParallelAccess {
 
 		val order = list.join("")
 
-		 println(order)
 		val startLong = order.indexOf("1")
 		val endLong = order.indexOf("7")
 

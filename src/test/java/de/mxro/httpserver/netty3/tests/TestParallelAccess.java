@@ -113,7 +113,7 @@ public class TestParallelAccess {
   public void test_queue_overflow() {
     try {
       final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
-      serviceMap.put("/one", Services.delayedEcho(1000));
+      serviceMap.put("/one", Services.delayedEcho(100));
       serviceMap.put("/two", Services.delayedEcho(1));
       final HttpService service = Services.withParallelWorkerThreads("test", 2, 230000, Services.dispatcher(serviceMap));
       final Operation<Object> _function = new Operation<Object>() {
@@ -141,9 +141,7 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("1");
-                InputOutput.<String>println("call long");
                 Unirest.post("http://localhost:12428/one").body("Hello").asString().getBody();
-                InputOutput.<String>println("long done");
                 list.add("7");
               }
             }
@@ -162,9 +160,7 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("6");
-                InputOutput.<String>println("call short");
                 Unirest.post("http://localhost:12428/two").body("Hello").asString().getBody();
-                InputOutput.<String>println("short done");
                 list.add("8");
               }
             }
@@ -178,7 +174,6 @@ public class TestParallelAccess {
       t1.join();
       t2.join();
       final String order = IterableExtensions.join(list, "");
-      InputOutput.<String>println(order);
       final int startLong = order.indexOf("1");
       final int endLong = order.indexOf("7");
       Assert.assertTrue(((endLong - startLong) > 5));
