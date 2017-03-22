@@ -113,7 +113,13 @@ public final class BytesHandler {
 
             @Override
             public String getHeader(final String key) {
-                return headers.get(key);
+                for (final Entry<String, String> e : headers.entrySet()) {
+                    if (e.getKey().toLowerCase().equals(key.toLowerCase())) {
+                        return e.getValue();
+                    }
+
+                }
+                return null;
             }
 
             byte[] byteArray = null;
