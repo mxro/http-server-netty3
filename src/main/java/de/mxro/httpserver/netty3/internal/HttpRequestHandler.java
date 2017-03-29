@@ -40,12 +40,12 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
             if (ioException.getMessage() != null && ioException.getMessage().contains("Connection reset by peer")) {
                 Log.trace("Client disconnected before response was sent.", e.getCause());
             }
-            Log.warn("IO Exception while processing message", cause);
+            Log.warn("IO Exception while processing message: " + cause.getMessage());
             return;
         }
 
         if (cause instanceof java.nio.channels.ClosedChannelException) {
-            Log.trace("Client disconnected before response was sent.", cause);
+            Log.warn("Client disconnected before response was sent.", cause);
             return;
         }
         if (cause instanceof javax.net.ssl.SSLHandshakeException || cause instanceof NotSslRecordException

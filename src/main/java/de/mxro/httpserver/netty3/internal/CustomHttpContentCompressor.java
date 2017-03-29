@@ -4,7 +4,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.codec.http.HttpContentCompressor;
 
-public class CustomHttpContentCompressor extends HttpContentCompressor {
+public final class CustomHttpContentCompressor extends HttpContentCompressor {
 
     @Override
     public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
