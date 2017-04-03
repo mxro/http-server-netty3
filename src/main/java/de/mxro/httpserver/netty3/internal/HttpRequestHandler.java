@@ -23,7 +23,7 @@ import org.jboss.netty.handler.ssl.NotSslRecordException;
  * @author <a href="http://www.mxro.de/">Max Rohde</a>
  * 
  */
-public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
+public final class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
     protected final BytesHandler byteStreamHandler;
 
