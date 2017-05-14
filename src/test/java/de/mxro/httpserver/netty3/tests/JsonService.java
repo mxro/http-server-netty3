@@ -1,6 +1,7 @@
 package de.mxro.httpserver.netty3.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -30,12 +31,16 @@ public class JsonService implements HttpService {
       JsonParser _jsonParser = new JsonParser();
       byte[] _data = request.getData();
       String _string = new String(_data, "UTF-8");
-      final JsonObject jsonObject = _jsonParser.parse(_string).getAsJsonObject();
+      JsonElement _parse = _jsonParser.parse(_string);
+      final JsonObject jsonObject = _parse.getAsJsonObject();
       JsonPrimitive _jsonPrimitive = new JsonPrimitive("yes: hello and fällen");
       jsonObject.add("server", _jsonPrimitive);
-      final String json = new Gson().toJson(jsonObject);
-      response.setContent(json.getBytes("UTF-8"));
-      callback.apply(SuccessFail.success());
+      Gson _gson = new Gson();
+      final String json = _gson.toJson(jsonObject);
+      byte[] _bytes = json.getBytes("UTF-8");
+      response.setContent(_bytes);
+      SuccessFail _success = SuccessFail.success();
+      callback.apply(_success);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

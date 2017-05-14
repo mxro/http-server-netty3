@@ -2,7 +2,10 @@ package de.mxro.httpserver.netty3.tests;
 
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.Snapshot;
+import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.request.HttpRequestWithBody;
+import com.mashape.unirest.request.body.RequestBodyEntity;
 import de.mxro.httpserver.HttpService;
 import de.mxro.httpserver.netty3.Netty3Server;
 import de.mxro.httpserver.netty3.Netty3ServerComponent;
@@ -10,11 +13,14 @@ import de.mxro.httpserver.services.Services;
 import de.mxro.metrics.jre.Metrics;
 import delight.async.AsyncCommon;
 import delight.async.Operation;
+import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
 import delight.async.properties.PropertyNode;
+import delight.async.properties.PropertyOperation;
 import delight.functional.Closure;
 import delight.functional.Success;
+import delight.promise.Promise;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,13 +38,17 @@ public class TestParallelAccess {
   public void test_parallel_possible() {
     try {
       final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
-      serviceMap.put("/one", Services.delayedEcho(100));
-      serviceMap.put("/two", Services.delayedEcho(1));
-      final HttpService service = Services.withParallelWorkerThreads("test", 10, 230000, Services.dispatcher(serviceMap));
+      HttpService _delayedEcho = Services.delayedEcho(100);
+      serviceMap.put("/one", _delayedEcho);
+      HttpService _delayedEcho_1 = Services.delayedEcho(1);
+      serviceMap.put("/two", _delayedEcho_1);
+      HttpService _dispatcher = Services.dispatcher(serviceMap);
+      final HttpService service = Services.withParallelWorkerThreads("test", 10, 230000, _dispatcher);
       final Operation<Object> _function = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          service.start(AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          service.start(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function);
@@ -60,7 +70,10 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("1");
-                Unirest.post("http://localhost:12422/one").body("Hello").asString().getBody();
+                HttpRequestWithBody _post = Unirest.post("http://localhost:12422/one");
+                RequestBodyEntity _body = _post.body("Hello");
+                HttpResponse<String> _asString = _body.asString();
+                _asString.getBody();
                 list.add("7");
               }
             }
@@ -79,7 +92,10 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("6");
-                Unirest.post("http://localhost:12422/two").body("Hello").asString().getBody();
+                HttpRequestWithBody _post = Unirest.post("http://localhost:12422/two");
+                RequestBodyEntity _body = _post.body("Hello");
+                HttpResponse<String> _asString = _body.asString();
+                _asString.getBody();
                 list.add("8");
               }
             }
@@ -99,8 +115,8 @@ public class TestParallelAccess {
       final Operation<Object> _function_4 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          server.stop(
-            AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          server.stop(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function_4);
@@ -113,13 +129,17 @@ public class TestParallelAccess {
   public void test_queue_overflow() {
     try {
       final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
-      serviceMap.put("/one", Services.delayedEcho(100));
-      serviceMap.put("/two", Services.delayedEcho(1));
-      final HttpService service = Services.withParallelWorkerThreads("test", 2, 230000, Services.dispatcher(serviceMap));
+      HttpService _delayedEcho = Services.delayedEcho(100);
+      serviceMap.put("/one", _delayedEcho);
+      HttpService _delayedEcho_1 = Services.delayedEcho(1);
+      serviceMap.put("/two", _delayedEcho_1);
+      HttpService _dispatcher = Services.dispatcher(serviceMap);
+      final HttpService service = Services.withParallelWorkerThreads("test", 2, 230000, _dispatcher);
       final Operation<Object> _function = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          service.start(AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          service.start(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function);
@@ -141,7 +161,10 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("1");
-                Unirest.post("http://localhost:12428/one").body("Hello").asString().getBody();
+                HttpRequestWithBody _post = Unirest.post("http://localhost:12428/one");
+                RequestBodyEntity _body = _post.body("Hello");
+                HttpResponse<String> _asString = _body.asString();
+                _asString.getBody();
                 list.add("7");
               }
             }
@@ -160,7 +183,10 @@ public class TestParallelAccess {
             for (final Integer i : _upTo) {
               {
                 list.add("6");
-                Unirest.post("http://localhost:12428/two").body("Hello").asString().getBody();
+                HttpRequestWithBody _post = Unirest.post("http://localhost:12428/two");
+                RequestBodyEntity _body = _post.body("Hello");
+                HttpResponse<String> _asString = _body.asString();
+                _asString.getBody();
                 list.add("8");
               }
             }
@@ -180,8 +206,8 @@ public class TestParallelAccess {
       final Operation<Object> _function_4 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          server.stop(
-            AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          server.stop(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function_4);
@@ -194,13 +220,19 @@ public class TestParallelAccess {
   public void test_task_delayed() {
     try {
       final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
-      serviceMap.put("/slow", Services.withParallelWorkerThreads("slow", 2, 5000, Services.delayedEcho(400)));
-      serviceMap.put("/fast", Services.withParallelWorkerThreads("fast", 2, 5000, Services.delayedEcho(1)));
-      final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 230000, Services.dispatcher(serviceMap));
+      HttpService _delayedEcho = Services.delayedEcho(400);
+      HttpService _withParallelWorkerThreads = Services.withParallelWorkerThreads("slow", 2, 5000, _delayedEcho);
+      serviceMap.put("/slow", _withParallelWorkerThreads);
+      HttpService _delayedEcho_1 = Services.delayedEcho(1);
+      HttpService _withParallelWorkerThreads_1 = Services.withParallelWorkerThreads("fast", 2, 5000, _delayedEcho_1);
+      serviceMap.put("/fast", _withParallelWorkerThreads_1);
+      HttpService _dispatcher = Services.dispatcher(serviceMap);
+      final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 230000, _dispatcher);
       final Operation<Object> _function = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          service.start(AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          service.start(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function);
@@ -225,14 +257,18 @@ public class TestParallelAccess {
               public void run() {
                 try {
                   list.add("1");
-                  Unirest.post("http://localhost:12628/slow").body("Hello").asString().getBody();
+                  HttpRequestWithBody _post = Unirest.post("http://localhost:12628/slow");
+                  RequestBodyEntity _body = _post.body("Hello");
+                  HttpResponse<String> _asString = _body.asString();
+                  _asString.getBody();
                   list.add("7");
                 } catch (Throwable _e) {
                   throw Exceptions.sneakyThrow(_e);
                 }
               }
             };
-            new Thread(_function).start();
+            Thread _thread = new Thread(_function);
+            _thread.start();
           }
         }
       };
@@ -249,17 +285,22 @@ public class TestParallelAccess {
                 try {
                   final long time = System.currentTimeMillis();
                   list.add("6");
-                  Unirest.post("http://localhost:12628/fast").body("Hello").asString().getBody();
+                  HttpRequestWithBody _post = Unirest.post("http://localhost:12628/fast");
+                  RequestBodyEntity _body = _post.body("Hello");
+                  HttpResponse<String> _asString = _body.asString();
+                  _asString.getBody();
                   list.add("8");
                   long _currentTimeMillis = System.currentTimeMillis();
                   long _minus = (_currentTimeMillis - time);
-                  metrics.<Long>record(Metrics.value("time", _minus));
+                  PropertyOperation<Long> _value = Metrics.value("time", _minus);
+                  metrics.<Long>record(_value);
                 } catch (Throwable _e) {
                   throw Exceptions.sneakyThrow(_e);
                 }
               }
             };
-            new Thread(_function).start();
+            Thread _thread = new Thread(_function);
+            _thread.start();
           }
         }
       };
@@ -277,6 +318,7 @@ public class TestParallelAccess {
       final Operation<Success> _function_4 = new Operation<Success>() {
         @Override
         public void apply(final ValueCallback<Success> cb) {
+          Promise<Object> _retrieve = metrics.retrieve("time");
           final Closure<Object> _function = new Closure<Object>() {
             @Override
             public void apply(final Object time) {
@@ -292,15 +334,15 @@ public class TestParallelAccess {
               cb.onSuccess(Success.INSTANCE);
             }
           };
-          metrics.retrieve("time").get(_function);
+          _retrieve.get(_function);
         }
       };
       Async.<Success>waitFor(_function_4);
       final Operation<Object> _function_5 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          server.stop(
-            AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          server.stop(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function_5);
@@ -312,12 +354,16 @@ public class TestParallelAccess {
   @Test
   public void test_task_timeout() {
     final HashMap<String, HttpService> serviceMap = new HashMap<String, HttpService>();
-    serviceMap.put("/slow", Services.withParallelWorkerThreads("slow", 2, 100, Services.delayedEcho(1000)));
-    final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 100, Services.dispatcher(serviceMap));
+    HttpService _delayedEcho = Services.delayedEcho(1000);
+    HttpService _withParallelWorkerThreads = Services.withParallelWorkerThreads("slow", 2, 100, _delayedEcho);
+    serviceMap.put("/slow", _withParallelWorkerThreads);
+    HttpService _dispatcher = Services.dispatcher(serviceMap);
+    final HttpService service = Services.withParallelWorkerThreads("dispatcher", 2, 100, _dispatcher);
     final Operation<Object> _function = new Operation<Object>() {
       @Override
       public void apply(final ValueCallback<Object> cb) {
-        service.start(AsyncCommon.<Object>asSimpleCallback(cb));
+        SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+        service.start(_asSimpleCallback);
       }
     };
     Async.<Object>waitFor(_function);
@@ -333,7 +379,11 @@ public class TestParallelAccess {
       @Override
       public void apply(final ValueCallback<Success> cb) {
         try {
-          InputOutput.<String>println(Unirest.post("http://localhost:12728/slow").body("Hello").asString().getBody());
+          HttpRequestWithBody _post = Unirest.post("http://localhost:12728/slow");
+          RequestBodyEntity _body = _post.body("Hello");
+          HttpResponse<String> _asString = _body.asString();
+          String _body_1 = _asString.getBody();
+          InputOutput.<String>println(_body_1);
           cb.onSuccess(Success.INSTANCE);
         } catch (Throwable _e) {
           throw Exceptions.sneakyThrow(_e);
@@ -344,8 +394,8 @@ public class TestParallelAccess {
     final Operation<Object> _function_3 = new Operation<Object>() {
       @Override
       public void apply(final ValueCallback<Object> cb) {
-        server.stop(
-          AsyncCommon.<Object>asSimpleCallback(cb));
+        SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+        server.stop(_asSimpleCallback);
       }
     };
     Async.<Object>waitFor(_function_3);

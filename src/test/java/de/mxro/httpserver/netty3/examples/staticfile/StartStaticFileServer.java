@@ -8,6 +8,7 @@ import de.mxro.httpserver.resources.Resources;
 import de.mxro.httpserver.services.Services;
 import delight.async.AsyncCommon;
 import delight.async.Operation;
+import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -17,12 +18,15 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 public class StartStaticFileServer {
   public static void main(final String[] args) {
     try {
-      final ResourceProvider source = Resources.cache(Resources.forWeb(Resources.fromClasspath(StartStaticFileServer.class)));
+      ResourceProvider _fromClasspath = Resources.fromClasspath(StartStaticFileServer.class);
+      ResourceProvider _forWeb = Resources.forWeb(_fromClasspath);
+      final ResourceProvider source = Resources.cache(_forWeb);
       final HttpService service = Services.resources(source);
       final Operation<Object> _function = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          service.start(AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          service.start(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function);
@@ -39,14 +43,16 @@ public class StartStaticFileServer {
       final Operation<Object> _function_2 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          server.stop(AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          server.stop(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function_2);
       final Operation<Object> _function_3 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          service.stop(AsyncCommon.<Object>asSimpleCallback(cb));
+          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
+          service.stop(_asSimpleCallback);
         }
       };
       Async.<Object>waitFor(_function_3);
