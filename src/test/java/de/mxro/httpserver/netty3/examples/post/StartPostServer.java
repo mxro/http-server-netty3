@@ -6,7 +6,6 @@ import de.mxro.httpserver.netty3.Netty3ServerComponent;
 import de.mxro.httpserver.services.Services;
 import delight.async.AsyncCommon;
 import delight.async.Operation;
-import delight.async.callbacks.SimpleCallback;
 import delight.async.callbacks.ValueCallback;
 import delight.async.jre.Async;
 import java.util.HashMap;
@@ -20,16 +19,12 @@ public class StartPostServer {
   public static void main(final String[] args) {
     try {
       final HashMap<String, HttpService> services = new HashMap<String, HttpService>();
-      HttpService _echo = Services.echo();
-      services.put("/service", _echo);
-      byte[] _bytes = StartPostServer.PAGE.getBytes();
-      HttpService _data = Services.data(_bytes, "text/html");
-      services.put("*", _data);
+      services.put("/service", Services.echo());
+      services.put("*", Services.data(StartPostServer.PAGE.getBytes(), "text/html"));
       final Operation<Netty3ServerComponent> _function = new Operation<Netty3ServerComponent>() {
         @Override
         public void apply(final ValueCallback<Netty3ServerComponent> cb) {
-          HttpService _dispatcher = Services.dispatcher(services);
-          Netty3Server.start(_dispatcher, 8081, cb);
+          Netty3Server.start(Services.dispatcher(services), 8081, cb);
         }
       };
       final Netty3ServerComponent server = Async.<Netty3ServerComponent>waitFor(_function);
@@ -39,8 +34,7 @@ public class StartPostServer {
       final Operation<Object> _function_1 = new Operation<Object>() {
         @Override
         public void apply(final ValueCallback<Object> cb) {
-          SimpleCallback _asSimpleCallback = AsyncCommon.<Object>asSimpleCallback(cb);
-          server.stop(_asSimpleCallback);
+          server.stop(AsyncCommon.<Object>asSimpleCallback(cb));
         }
       };
       Async.<Object>waitFor(_function_1);
