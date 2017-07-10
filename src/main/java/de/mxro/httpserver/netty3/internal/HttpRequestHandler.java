@@ -54,7 +54,12 @@ public final class HttpRequestHandler extends SimpleChannelUpstreamHandler {
             Log.warn("SSL connection cannot be established with client", cause);
             return;
         }
-
+        
+        if (cause instanceof IllegalArgumentException && cause.getMessage().startsWith("empty text")) {
+        	Log.warn("Illegal HTTP version: empty text.");
+        	return;
+        }
+        
         Log.warn("Error while processing HTTP", e.getCause());
         // HttpUtils.sendHttpError(e,
         // this.getClass().getName() + ": Unexpected exception occured [" +
